@@ -1,6 +1,42 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Script from 'next/script';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Vijayakumar G.A.',
+  jobTitle: 'CTO AI Transformation',
+  description: 'APAC CTO-calibre technology executive with 20+ years in AI Transformation, Generative AI, and Go-To-Market execution.',
+  url: 'https://deck.vercel.app',
+  sameAs: ['https://www.linkedin.com/in/vijayga'],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Singapore',
+    addressCountry: 'SG',
+  },
+  knowsAbout: [
+    'AI Transformation',
+    'Generative AI',
+    'RAG',
+    'AI Agents',
+    'ML Ops',
+    'GTM Strategy',
+    'Executive Advisory',
+    'Enterprise Architecture',
+  ],
+  alumniOf: {
+    '@type': 'EducationalOrganization',
+    name: 'National University of Singapore',
+  },
+  worksFor: [
+    {
+      '@type': 'Organization',
+      name: 'Cyaire',
+    },
+  ],
+};
 
 const coreImpact = [
   { highlight: 'Accelerate AI adoption', text: 'from strategy to production' },
@@ -23,7 +59,13 @@ const skills = [
 
 export default function Home() {
   return (
-    <div className="h-screen bg-black text-white flex items-center justify-center p-8 md:p-16">
+    <>
+      <Script
+        id="json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="h-screen bg-black text-white flex items-center justify-center p-8 md:p-16">
       <div className="max-w-6xl w-full">
         {/* Blue accent line */}
         <motion.div
@@ -160,5 +202,6 @@ export default function Home() {
         </div>
       </div>
     </div>
+    </>
   );
 }

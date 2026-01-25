@@ -1,0 +1,5 @@
+# robots.txt for deck.vercel.app
+User-agent: *
+Allow: /
+
+Sitemap: https://deck.vercel.app/sitemap.xml
