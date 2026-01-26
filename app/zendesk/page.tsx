@@ -540,7 +540,7 @@ export default function Presentation() {
     </div>,
 
     // Slide 11: About the Author (DARK)
-    <div key="11" className="slide bg-black text-white flex flex-col p-12">
+    <div key="11" className="slide bg-black text-white flex flex-col p-12 h-full min-h-screen">
       <div className="max-w-6xl mx-auto w-full h-full flex flex-col justify-center">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Left: Name and Title */}
