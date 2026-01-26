@@ -66,18 +66,18 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="h-screen bg-black text-white flex items-center justify-center p-8 md:p-16">
+      <div className="min-h-screen bg-black text-white flex items-center justify-center p-6 md:p-16 overflow-y-auto">
       <div className="max-w-6xl w-full">
         {/* Blue accent line */}
         <motion.div
-          className="h-1 bg-blue-500 mb-16"
+          className="h-1 bg-blue-500 mb-8 md:mb-16"
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           style={{ transformOrigin: 'left' }}
         />
 
-        <div className="grid md:grid-cols-[300px_1fr] gap-12 md:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8 md:gap-16">
           {/* Left Column */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -86,13 +86,14 @@ export default function Home() {
           >
             <p className="text-xs tracking-[0.2em] text-white/50 mb-4">ABOUT THE AUTHOR</p>
 
-            <div className="w-32 h-32 mb-6 rounded-lg overflow-hidden border-2 border-white/20">
+            <div className="w-28 h-28 md:w-32 md:h-32 mb-6 rounded-lg overflow-hidden border-2 border-white/20">
               <Image
                 src="/images/profile.jpeg"
                 alt="Vijayakumar G.A."
-                width={128}
-                height={128}
+                width={256}
+                height={256}
                 className="w-full h-full object-cover"
+                quality={90}
                 priority
               />
             </div>
