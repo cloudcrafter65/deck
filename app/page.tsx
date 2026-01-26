@@ -84,8 +84,6 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
             >
-              <p className="text-xs tracking-[0.2em] text-gray-400 mb-4">ABOUT THE AUTHOR</p>
-
               {/* Portrait Image - maintains 2:3 aspect ratio */}
               <div className="w-full max-w-[240px] mb-6">
                 <Image
