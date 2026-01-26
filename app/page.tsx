@@ -71,12 +71,13 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 md:gap-12">
             {/* Left Column - Image & Basic Info */}
             <motion.div
+              className="text-center md:text-left"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
             >
               {/* Portrait Image - maintains 2:3 aspect ratio */}
-              <div className="w-full max-w-[240px] mb-6">
+              <div className="w-full max-w-[240px] mx-auto md:mx-0 mb-6">
                 <Image
                   src="/images/profile-sketch.jpg"
                   alt="Vijayakumar G.A."
@@ -96,7 +97,7 @@ export default function Home() {
                 CTO AI Transformation
               </p>
 
-              <div className="space-y-2 text-gray-600">
+              <div className="space-y-2 text-gray-600 flex flex-col items-center md:items-start">
                 <div className="flex items-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
