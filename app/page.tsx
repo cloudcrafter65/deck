@@ -8,8 +8,8 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Vijayakumar G.A.',
-  jobTitle: 'CTO AI Transformation',
-  description: 'APAC CTO-calibre technology executive with 20+ years in AI Transformation, Generative AI, and Go-To-Market execution.',
+  jobTitle: 'CTO - AI Transformation',
+  description: 'APAC CTO-calibre technology executive with 20+ years in AI Transformation, Technology Consulting, and Go-To-Market execution.',
   url: 'https://deck.vercel.app',
   sameAs: ['https://www.linkedin.com/in/vijayga'],
   address: {
@@ -48,7 +48,7 @@ const coreImpact = [
 const experience = [
   { company: 'Cyaire', role: 'Principal & CTO' },
   { company: 'Cisco Systems', role: 'Regional Industry Lead (FSI)' },
-  { company: 'Accenture, IBM, Orange/BT', role: '' },
+  { company: 'Accenture, IBM, Orange, BT', role: '' },
 ];
 
 const skills = [
@@ -94,7 +94,7 @@ export default function Home() {
               </h1>
 
               <p className="text-gray-600 text-lg mb-5">
-                CTO AI Transformation
+                CTO - AI Transformation
               </p>
 
               <div className="space-y-2 text-gray-600 flex flex-col items-center md:items-start">
@@ -129,7 +129,7 @@ export default function Home() {
               <div className="bg-gray-50 border border-gray-100 rounded-lg p-6 mb-8">
                 <p className="text-lg leading-relaxed text-gray-700">
                   Market-facing APAC CTO-calibre technology executive with <strong className="text-gray-900">20+ years</strong> at the
-                  intersection of AI Transformation, Generative AI, and regional Go-To-Market
+                  intersection of AI Transformation, Technology Consulting, and regional Go-To-Market
                   execution. Trusted advisor to senior customer executives across APAC.
                 </p>
               </div>
