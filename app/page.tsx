@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Script from 'next/script';
+import Image from 'next/image';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -83,9 +84,20 @@ export default function Home() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
+            <div className="w-32 h-32 mb-6 rounded-full overflow-hidden border-2 border-white/20">
+              <Image
+                src="/images/profile.jpeg"
+                alt="Vijayakumar G.A."
+                width={128}
+                height={128}
+                className="w-full h-full object-cover"
+                priority
+              />
+            </div>
+
             <p className="text-xs tracking-[0.2em] text-white/50 mb-4">ABOUT THE AUTHOR</p>
 
-            <h1 className="text-5xl font-bold leading-tight mb-4">
+            <h1 className="text-4xl font-bold leading-tight mb-4">
               Vijayakumar<br />G.A.
             </h1>
 
