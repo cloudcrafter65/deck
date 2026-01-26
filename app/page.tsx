@@ -68,15 +68,6 @@ export default function Home() {
       />
       <div className="min-h-screen bg-white text-gray-900 flex items-center justify-center p-6 md:p-12 overflow-y-auto">
         <div className="max-w-6xl w-full">
-          {/* Blue accent line */}
-          <motion.div
-            className="h-1 bg-blue-600 mb-8 md:mb-12"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            style={{ transformOrigin: 'left' }}
-          />
-
           <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 md:gap-12">
             {/* Left Column - Image & Basic Info */}
             <motion.div
