@@ -128,7 +128,7 @@ export default function Home() {
               {/* Bio */}
               <div className="bg-gray-50 border border-gray-100 rounded-lg p-6 mb-8">
                 <p className="text-lg leading-relaxed text-gray-700">
-                  Market-facing APAC CTO-calibre technology executive with <strong className="text-gray-900">20+ years</strong> at the
+                  Market-facing APAC CTO-calibre technology executive at the
                   intersection of AI Transformation, Technology Consulting, and regional Go-To-Market
                   execution. Trusted advisor to senior customer executives across APAC.
                 </p>
