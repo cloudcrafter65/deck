@@ -88,6 +88,57 @@ export function TitleSlide() {
   );
 }
 
+export function TOCSlide() {
+  const sections = [
+    { num: '01', title: 'The Paradox', desc: 'Capital influx meets execution failure', slide: 3 },
+    { num: '02', title: 'Four Structural Failures', desc: 'Legacy systems, data, skepticism, ROI', slide: 5 },
+    { num: '03', title: 'The Solutions', desc: 'Integration, domain AI, governance, augmentation', slide: 10 },
+    { num: '04', title: 'Singapore Beachhead', desc: 'Regional template opportunity', slide: 21 },
+    { num: '05', title: 'The Opportunity', desc: 'Call to action', slide: 25 },
+  ];
+
+  const handleJump = (slideNum: number) => {
+    window.location.hash = String(slideNum);
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+  };
+
+  return (
+    <Slide className="flex items-center justify-center bg-[#FCFAF8] p-8 md:p-16">
+      <div className="max-w-4xl w-full">
+        <AnimatedText as="h2" className="text-4xl font-bold text-[#1C2321] mb-2">
+          Overview
+        </AnimatedText>
+        <AnimatedText as="p" className="text-lg text-[#494E4C] mb-10" delay={0.1}>
+          A strategic analysis in five parts
+        </AnimatedText>
+
+        <div className="space-y-2">
+          {sections.map((section, i) => (
+            <AnimatedText
+              key={section.num}
+              delay={0.15 + i * 0.1}
+            >
+              <button
+                onClick={() => handleJump(section.slide)}
+                className="w-full flex items-center gap-6 p-4 border-b border-[#E5E0DB] last:border-b-0 hover:bg-[#CE4C0B]/5 transition-colors rounded-lg text-left group"
+              >
+                <span className="text-3xl font-bold text-[#CE4C0B] min-w-[50px]">{section.num}</span>
+                <div className="flex-1">
+                  <div className="text-xl font-semibold text-[#1C2321] group-hover:text-[#CE4C0B] transition-colors">{section.title}</div>
+                  <div className="text-sm text-[#494E4C]">{section.desc}</div>
+                </div>
+                <svg className="w-5 h-5 text-[#494E4C] group-hover:text-[#CE4C0B] group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </AnimatedText>
+          ))}
+        </div>
+      </div>
+    </Slide>
+  );
+}
+
 export function CapitalInflowSlide() {
   return (
     <Slide className="flex items-center justify-center bg-[#FCFAF8] p-8 md:p-16">

@@ -6,13 +6,25 @@ export function useSlideNavigation(totalSlides: number) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
 
-  // Initialize from URL hash
+  // Initialize from URL hash and listen for hash changes
   useEffect(() => {
-    const hash = window.location.hash.slice(1);
-    const slideNum = parseInt(hash, 10);
-    if (!isNaN(slideNum) && slideNum >= 1 && slideNum <= totalSlides) {
-      setCurrentSlide(slideNum - 1);
-    }
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1);
+      const slideNum = parseInt(hash, 10);
+      if (!isNaN(slideNum) && slideNum >= 1 && slideNum <= totalSlides) {
+        setCurrentSlide(prev => {
+          setDirection(slideNum - 1 > prev ? 1 : -1);
+          return slideNum - 1;
+        });
+      }
+    };
+
+    // Initialize on mount
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
   }, [totalSlides]);
 
   // Update URL hash when slide changes

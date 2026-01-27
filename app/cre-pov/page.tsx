@@ -3,6 +3,7 @@
 import { Deck } from '@/components/core';
 import {
   TitleSlide,
+  TOCSlide,
   CapitalInflowSlide,
   ExecutionFailingSlide,
   FailureMapSlide,
@@ -33,6 +34,7 @@ export default function CREPovDeck() {
   return (
     <Deck>
       <TitleSlide />
+      <TOCSlide />
       <CapitalInflowSlide />
       <ExecutionFailingSlide />
       <FailureMapSlide />
