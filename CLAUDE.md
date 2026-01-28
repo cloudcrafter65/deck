@@ -26,6 +26,10 @@ npm run start        # Start production server
 npm run lint         # Run ESLint
 ```
 
+## Git Workflow
+
+Commit after completing logical units of work (features, fixes, refactors) rather than after every micro-change. Each commit should leave the codebase in a working state.
+
 ## Project Structure
 
 ```
