@@ -56,6 +56,11 @@ export function useSlideNavigation(totalSlides: number) {
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if typing in an input
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+
       switch (e.key) {
         case 'ArrowRight':
         case 'ArrowDown':
@@ -77,6 +82,19 @@ export function useSlideNavigation(totalSlides: number) {
         case 'End':
           e.preventDefault();
           goToSlide(totalSlides - 1);
+          break;
+        case 'p':
+        case 'P':
+          // Let browser handle Cmd+P / Ctrl+P natively
+          if (e.metaKey || e.ctrlKey) break;
+          // Don't trigger if already in print mode
+          if (new URLSearchParams(window.location.search).has('print')) break;
+          e.preventDefault();
+          // Open print mode in new tab
+          const url = new URL(window.location.href);
+          url.searchParams.set('print', 'true');
+          url.hash = '';
+          window.open(url.toString(), '_blank');
           break;
       }
     };
