@@ -18,14 +18,16 @@ const defaultVariants: Variants = {
 export function Slide({ children, className = '', variants = defaultVariants }: SlideProps) {
   return (
     <motion.div
-      className={`w-full h-full ${className}`}
+      className="w-full h-full overflow-hidden max-md:overflow-y-auto"
       variants={variants}
       initial="initial"
       animate="animate"
       exit="exit"
       transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
     >
-      {children}
+      <div className={`w-full h-full max-md:h-auto max-md:min-h-full ${className}`}>
+        {children}
+      </div>
     </motion.div>
   );
 }

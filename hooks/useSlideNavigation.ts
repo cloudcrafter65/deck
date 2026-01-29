@@ -66,22 +66,35 @@ export function useSlideNavigation(totalSlides: number) {
         case 'ArrowDown':
         case ' ':
         case 'PageDown':
+        case '.':
+        case '>':
           e.preventDefault();
           nextSlide();
           break;
         case 'ArrowLeft':
         case 'ArrowUp':
         case 'PageUp':
+        case ',':
+        case '<':
           e.preventDefault();
           prevSlide();
           break;
         case 'Home':
+        case 'h':
+        case 'H':
           e.preventDefault();
           goToSlide(0);
           break;
         case 'End':
+        case 'l':
+        case 'L':
           e.preventDefault();
           goToSlide(totalSlides - 1);
+          break;
+        case '?':
+          e.preventDefault();
+          // Toggle help overlay - handled by Deck component
+          window.dispatchEvent(new CustomEvent('toggleHelp'));
           break;
         case 'p':
         case 'P':

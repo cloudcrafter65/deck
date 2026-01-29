@@ -18,10 +18,55 @@ body {
 
 /* Print styles for PDF export */
 @media print {
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
   .slide {
     page-break-after: always;
     page-break-inside: avoid;
-    width: 100vw;
-    height: 100vh;
+    width: 100vw !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    overflow: hidden !important;
+    position: relative;
+  }
+
+  .slide:last-child {
+    page-break-after: auto;
+  }
+
+  /* Force all content to be visible (disable animations) */
+  .slide,
+  .slide *,
+  .slide > *,
+  .slide > * > * {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+    visibility: visible !important;
+  }
+
+  /* Ensure flex containers work properly */
+  .slide > div {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* Hide navigation and UI elements during print */
+  button,
+  [role="button"] {
+    display: none !important;
   }
 }
