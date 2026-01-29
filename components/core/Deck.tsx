@@ -2,6 +2,7 @@
 
 import { ReactNode, useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
 import { isPrintMode } from '@/lib/pdf';
 
@@ -15,7 +16,7 @@ export function Deck({ children, className = '' }: DeckProps) {
   const totalSlides = slides.length;
   const [printMode, setPrintMode] = useState(false);
 
-  const { currentSlide, direction } = useSlideNavigation(totalSlides);
+  const { currentSlide, direction, nextSlide, prevSlide } = useSlideNavigation(totalSlides);
 
   useEffect(() => {
     setPrintMode(isPrintMode());
@@ -45,8 +46,28 @@ export function Deck({ children, className = '' }: DeckProps) {
         </div>
       </AnimatePresence>
 
+      {/* Navigation arrows */}
+      {currentSlide > 0 && (
+        <button
+          onClick={prevSlide}
+          className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 text-white/80 hover:bg-black/50 hover:text-white transition-all touch-manipulation"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+      )}
+      {currentSlide < totalSlides - 1 && (
+        <button
+          onClick={nextSlide}
+          className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 text-white/80 hover:bg-black/50 hover:text-white transition-all touch-manipulation"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+      )}
+
       {/* Slide indicator */}
-      <div className="absolute bottom-4 right-4 text-white/50 text-sm font-mono">
+      <div className="absolute bottom-4 right-4 px-2 py-1 rounded bg-black/30 backdrop-blur-sm text-white/80 text-sm font-mono">
         {currentSlide + 1} / {totalSlides}
       </div>
     </div>
