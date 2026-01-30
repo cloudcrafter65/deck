@@ -1,18 +1,24 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: 'https://deck.vercel.app',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-    {
-      url: 'https://deck.vercel.app/example',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
-    },
+  const baseUrl = 'https://deck.bytejournal.blog';
+
+  const routes = [
+    '',
+    '/appmod',
+    '/cre-pov',
+    '/ams-gtm-26',
+    '/resume-2hr',
+    '/resume-2hr/pov',
+    '/zendesk',
+    '/zendesk/whitepaper',
+    '/example',
   ];
+
+  return routes.map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: route === '' ? 'weekly' : 'monthly',
+    priority: route === '' ? 1.0 : route.split('/').length > 2 ? 0.6 : 0.8,
+  }));
 }

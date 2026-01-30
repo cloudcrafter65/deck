@@ -15,7 +15,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://deck.vercel.app'),
+  metadataBase: new URL('https://deck.bytejournal.blog'),
   title: {
     default: 'Vijayakumar G.A. | CTO AI Transformation',
     template: '%s | Vijayakumar G.A.',
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://deck.vercel.app',
+    url: 'https://deck.bytejournal.blog',
     siteName: 'Vijayakumar G.A.',
     title: 'Vijayakumar G.A. | CTO AI Transformation',
     description: 'APAC CTO-calibre technology executive with 20+ years in AI Transformation, Generative AI, and Go-To-Market execution.',
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   alternates: {
-    canonical: 'https://deck.vercel.app',
+    canonical: 'https://deck.bytejournal.blog',
   },
   category: 'Technology',
 };

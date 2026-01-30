@@ -1,5 +1,5 @@
-# robots.txt for deck.vercel.app
+# robots.txt for deck.bytejournal.blog
 User-agent: *
 Allow: /
 
-Sitemap: https://deck.vercel.app/sitemap.xml
+Sitemap: https://deck.bytejournal.blog/sitemap.xml
