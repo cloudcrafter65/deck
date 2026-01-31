@@ -1,160 +1,76 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Commands
 
-## Project Overview
-
-A slide deck platform hosting multiple presentation decks across multiple domains from a single codebase. Each deck has AI-generated layouts and styling with no predefined templates. Slides are pure React/TSX components, not MDX.
+```bash
+npm run dev      # Development server
+npm run build    # Production build
+npm run lint     # ESLint
+```
 
 ## Multi-Site Architecture
 
-This codebase serves two domains with independent content:
+Single codebase serving two domains via `NEXT_PUBLIC_SITE` env var:
 
-| Site ID | Domain | Decks |
-|---------|--------|-------|
+| Site | Domain | Decks |
+|------|--------|-------|
 | `bytejournal` | deck.bytejournal.blog | cre-pov, resume-2hr, zendesk, example |
 | `cyaire` | deck.cyaire.com | ams-client-pitch, appmod, ams-gtm-26 |
 
-**Key files:**
-- `/lib/sites.ts` - Site configuration (domains, decks, metadata)
-- `/proxy.ts` - Restricts deck access based on `NEXT_PUBLIC_SITE` env var
-- `/app/home/*.tsx` - Site-specific homepage components
-
-**How it works:**
-1. `NEXT_PUBLIC_SITE` environment variable determines active site
-2. Middleware blocks access to decks not assigned to the current site
-3. Homepage, metadata, and sitemap are dynamically generated based on site config
-
-**Adding a deck to a site:**
-1. Create the deck in `/app/[deck-name]/`
-2. Add deck slug to the appropriate site in `/lib/sites.ts`
-3. Add deck slug to `allDecks` set in `/proxy.ts`
-
-## Technology Stack
-
-- **Next.js 16** with App Router
-- **React 19** with TypeScript (strict mode)
-- **Tailwind CSS 4** for utility styling
-- **Framer Motion 12** for all animations
-- **lucide-react** for icons
-- **prism-react-renderer** for code syntax highlighting
-- **Vercel** deployment
-
-## Build Commands
-
-```bash
-npm install          # Install dependencies
-npm run dev          # Development server
-npm run build        # Production build
-npm run start        # Start production server
-npm run lint         # Run ESLint
-```
-
-## Git Workflow
-
-Commit after completing logical units of work (features, fixes, refactors) rather than after every micro-change. Each commit should leave the codebase in a working state.
+**Key files:** `/lib/sites.ts` (config), `/proxy.ts` (access control)
 
 ## Project Structure
 
 ```
 /app
-  /home/               # Site-specific homepage components
-    BytejournalHome.tsx
-    CyaireHome.tsx
-  /[topic-name]/       # Each deck is a folder
-    page.tsx           # Deck entry point (default export component)
-    slides.tsx         # AI-generated slide components
-    styles.module.css  # Deck-specific styles (optional)
-    /components        # Deck-specific components (optional)
-  page.tsx             # Dynamic homepage (renders based on NEXT_PUBLIC_SITE)
-  layout.tsx           # Dynamic metadata based on site config
-  sitemap.ts           # Dynamic sitemap based on site config
-
-/components
-  /core                # Deck.tsx, Slide.tsx, Presenter.tsx
-  /primitives          # AnimatedText, CodeBlock, ImageReveal, Counter, DrawPath, ParallaxLayer
-
-/hooks                 # useSlideNavigation, useSlideIndex, useFullscreen, useReducedMotion
-
-/lib
-  sites.ts             # Multi-site configuration
-  transitions.ts, easings.ts, pdf.ts
-
-/proxy.ts              # Restricts deck access by site (Next.js 16 proxy)
-
-/public/images/[topic-name]/  # Per-deck images
+  /[deck-name]/          # Each deck folder
+    page.tsx             # Entry point (default export)
+    slides.tsx           # Slide components (named exports)
+    /components          # Deck-specific components
+  /home/                 # Site-specific homepages
+  /api/                  # API routes (send-email, visitor-info)
+/components/core         # Deck.tsx, Slide.tsx
+/components/primitives   # AnimatedText, CodeBlock, etc.
+/lib/sites.ts            # Site configuration
+/proxy.ts                # Deck access by site
+/public/images/[deck]/   # Per-deck images
 ```
-
-## Architecture
-
-**Core components:**
-- `Deck.tsx` - Minimal container handling navigation and slide state, wraps slides with AnimatePresence
-- `Slide.tsx` - Minimal wrapper providing Framer Motion animation scaffolding with customizable variants
-
-**Primitives** are optional building blocks. Create custom elements when primitives don't fit.
-
-**Navigation:** Arrow keys, Space, PageUp/Down, Home/End for slides. URL hash stores current slide (`/topic1/#5`). Touch swipe supported.
-
-**PDF Export:** Uses print CSS with `?print=true` query param to render all slides for printing.
 
 ## Adding a New Deck
 
-1. Create `/app/[topic-name]/`
-2. Create `page.tsx` with default export component importing Deck and slides
-3. Create `slides.tsx` with named export React slide components
-4. Add images to `/public/images/[topic-name]/` if needed
-5. **Assign to a site** - Add deck slug to the appropriate site's `decks` array in `/lib/sites.ts`
-6. **Register in proxy** - Add deck slug to `allDecks` set in `/proxy.ts`
+1. Create `/app/[deck-name]/` with `page.tsx` and `slides.tsx`
+2. Add slug to site's `decks` array in `/lib/sites.ts`
+3. Add slug to `allDecks` set in `/proxy.ts`
+4. Add images to `/public/images/[deck-name]/` if needed
 
-## Coding Conventions
+## Stack
 
-### General
+Next.js 16 (App Router), React 19, TypeScript strict, Tailwind CSS 4, Framer Motion 12
 
-- Use `'use client'` directive for all interactive components
-- Use TypeScript strict mode - no `any` types
-- Use path aliases: `@/components`, `@/hooks`, `@/lib`
-- Prefer named exports for slide components, default exports for page components
+## Conventions
 
-### React Patterns
+- `'use client'` for interactive components
+- Path aliases: `@/components`, `@/hooks`, `@/lib`
+- Named exports for slides, default exports for pages
+- Tailwind only (no inline styles)
+- Framer Motion for all animations
 
-- Use functional components with hooks
-- Define interfaces for component props (e.g., `interface SlideProps`)
-- Destructure props with defaults: `({ className = '', delay = 0 }: Props)`
-- Use `useCallback` for event handlers passed to children
-- Use `useMemo` for expensive computations or large static arrays
-- Clean up effects (event listeners, timeouts) in useEffect return
+## Slide Patterns
 
-### Styling
+```tsx
+// Standard slide structure
+<Slide className="flex items-center justify-center p-8 md:p-16 relative">
+  <div className="max-w-6xl w-full">
+    {/* Content */}
+  </div>
+  <SlideFooter variant="light" /> {/* or "dark" */}
+</Slide>
+```
 
-- Tailwind CSS for all styling - no inline styles or CSS-in-JS
-- Use template literals for dynamic classes: `` className={`base-class ${conditional}`} ``
-- Common patterns:
-  - Full-screen slides: `w-screen h-screen` or `w-full h-full`
-  - Flex centering: `flex items-center justify-center`
-  - Responsive grids: `grid grid-cols-1 md:grid-cols-2`
-  - Container max-width: `max-w-6xl mx-auto`
-  - Padding: `p-12` for slides, `p-6` or `p-8` for cards
+**Navigation:** Arrow keys, Space, PageUp/Down, Home/End. Hash stores slide (`#5`).
 
-### Animations
-
-- Use Framer Motion's `Variants` type for animation definitions
-- Standard transition: `{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }`
-- Stagger children with incremental `delay` prop
-- Wrap slide transitions in `AnimatePresence mode="wait"`
-
-### File Naming
-
-- Components: PascalCase (`Slide.tsx`, `AnimatedText.tsx`)
-- Hooks: camelCase with `use` prefix (`useSlideNavigation.ts`)
-- Utilities: camelCase (`transitions.ts`, `easings.ts`)
-
-### Import Order
-
-1. React imports
-2. Third-party libraries (framer-motion, lucide-react, next)
-3. Internal aliases (@/components, @/hooks, @/lib)
-4. Relative imports
+**PDF Export:** `?print=true` query param.
 
 ## Design Philosophy
 
-No templates - each deck is a blank canvas. Generate bespoke layouts, animations, and visual treatments based on topic, tone, audience, and brand inputs. Creative freedom over consistency.
+No templates. Each deck is a blank canvas with bespoke layouts and animations.
