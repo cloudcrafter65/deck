@@ -16,29 +16,35 @@ import {
   ConcernsSlide,
   IndustryApplicationsSlide,
   NextStepsSlide,
+  ClientInterestFormSlide,
   EndSlide,
 } from './slides';
+import { DeckTracker } from './components/DeckTracker';
 
 export default function AMSClientPitchDeck() {
   return (
-    <Deck>
-      <TitleSlide />
-      <ProblemSlide />
-      <PressurePointsSlide />
-      <VisionSlide />
-      <DifferentiatorSlide />
-      <ApproachOverviewSlide />
-      <Stage1Slide />
-      <Stage2Slide />
-      <Stage3Slide />
-      <Stage4Slide />
-      <DeliveryModelSlide />
-      <OutcomesSlide />
-      <CaseStudiesSlide />
-      <ConcernsSlide />
-      <IndustryApplicationsSlide />
-      <NextStepsSlide />
-      <EndSlide />
-    </Deck>
+    <>
+      <DeckTracker deckName="AMS Client Pitch" />
+      <Deck>
+        <TitleSlide />
+        <ProblemSlide />
+        <PressurePointsSlide />
+        <VisionSlide />
+        <DifferentiatorSlide />
+        <ApproachOverviewSlide />
+        <Stage1Slide />
+        <Stage2Slide />
+        <Stage3Slide />
+        <Stage4Slide />
+        <DeliveryModelSlide />
+        <OutcomesSlide />
+        <CaseStudiesSlide />
+        <ConcernsSlide />
+        <IndustryApplicationsSlide />
+        <NextStepsSlide />
+        <ClientInterestFormSlide />
+        <EndSlide />
+      </Deck>
+    </>
   );
 }

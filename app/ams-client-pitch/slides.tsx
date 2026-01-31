@@ -35,9 +35,11 @@ import {
   Factory,
   Heart,
   Calendar,
-  MessageCircle,
   ChevronRight,
+  Mail,
 } from 'lucide-react';
+import { SlideFooter } from './components/SlideFooter';
+import { ClientInterestForm } from './components/ClientInterestForm';
 
 // Design System
 // Primary: #0F172A (Slate 900) - Dark backgrounds
@@ -115,7 +117,7 @@ export function TitleSlide() {
           A pragmatic approach to modernizing critical business applications through incremental, outcome-focused transformations
         </AnimatedText>
 
-        <AnimatedText delay={0.6} className="flex flex-wrap items-center justify-center gap-4">
+        <AnimatedText delay={0.6} className="flex flex-wrap items-center justify-center gap-4 mb-10">
           <span className="px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-white/80 text-sm">
             8-12 Week Sprints
           </span>
@@ -126,7 +128,16 @@ export function TitleSlide() {
             Measurable Outcomes
           </span>
         </AnimatedText>
+
+        {/* Presenter Info */}
+        <AnimatedText delay={0.8} className="pt-6 border-t border-white/10">
+          <p className="text-white font-semibold text-lg">Vijayakumar G.A.</p>
+          <p className="text-slate-400">Principal & CTO</p>
+          <p className="text-sky-400 font-medium">Cyaire</p>
+        </AnimatedText>
       </div>
+
+      <SlideFooter />
     </Slide>
   );
 }
@@ -170,7 +181,7 @@ export function ProblemSlide() {
   ];
 
   return (
-    <Slide className="flex items-center justify-center bg-slate-50 p-8 md:p-16">
+    <Slide className="flex items-center justify-center bg-slate-50 p-8 md:p-16 relative">
       <div className="max-w-6xl w-full">
         <AnimatedText className="text-sm uppercase tracking-widest text-sky-600 font-semibold mb-4">
           The Reality
@@ -221,6 +232,8 @@ export function ProblemSlide() {
           </p>
         </motion.div>
       </div>
+
+      <SlideFooter variant="light" />
     </Slide>
   );
 }
@@ -252,7 +265,7 @@ export function PressurePointsSlide() {
   ];
 
   return (
-    <Slide className="flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 p-8 md:p-16">
+    <Slide className="flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 p-8 md:p-16 relative">
       <div className="max-w-5xl w-full">
         <AnimatedText className="text-sm uppercase tracking-widest text-sky-400 font-semibold mb-4">
           Intensifying Pressures
@@ -303,6 +316,8 @@ export function PressurePointsSlide() {
           </p>
         </motion.div>
       </div>
+
+      <SlideFooter />
     </Slide>
   );
 }
@@ -346,7 +361,7 @@ export function VisionSlide() {
   ];
 
   return (
-    <Slide className="flex items-center justify-center bg-white p-8 md:p-16">
+    <Slide className="flex items-center justify-center bg-white p-8 md:p-16 relative">
       <div className="max-w-6xl w-full">
         <AnimatedText className="text-sm uppercase tracking-widest text-sky-600 font-semibold mb-4">
           The Vision
@@ -391,6 +406,8 @@ export function VisionSlide() {
           </p>
         </motion.div>
       </div>
+
+      <SlideFooter variant="light" />
     </Slide>
   );
 }
@@ -424,7 +441,7 @@ export function DifferentiatorSlide() {
   ];
 
   return (
-    <Slide className="flex items-center justify-center bg-slate-50 p-8 md:p-16">
+    <Slide className="flex items-center justify-center bg-slate-50 p-8 md:p-16 relative">
       <div className="max-w-6xl w-full">
         <AnimatedText className="text-sm uppercase tracking-widest text-sky-600 font-semibold mb-4">
           Why Us
@@ -456,6 +473,8 @@ export function DifferentiatorSlide() {
           ))}
         </div>
       </div>
+
+      <SlideFooter variant="light" />
     </Slide>
   );
 }
@@ -530,6 +549,8 @@ export function ApproachOverviewSlide() {
           <strong className="text-white">Big enough to matter, small enough to manage.</strong> Each sprint delivers measurable improvement, not just technical artifacts.
         </motion.p>
       </div>
+
+      <SlideFooter />
     </Slide>
   );
 }
@@ -553,7 +574,7 @@ export function Stage1Slide() {
   ];
 
   return (
-    <Slide className="flex items-center justify-center bg-white p-8 md:p-16">
+    <Slide className="flex items-center justify-center bg-white p-8 md:p-16 relative">
       <div className="max-w-6xl w-full">
         <div className="flex items-center gap-4 mb-6">
           <div className="w-16 h-16 rounded-2xl bg-sky-100 flex items-center justify-center">
@@ -618,6 +639,8 @@ export function Stage1Slide() {
           </motion.div>
         </div>
       </div>
+
+      <SlideFooter variant="light" />
     </Slide>
   );
 }
@@ -635,7 +658,7 @@ export function Stage2Slide() {
   ];
 
   return (
-    <Slide className="flex items-center justify-center bg-slate-50 p-8 md:p-16">
+    <Slide className="flex items-center justify-center bg-slate-50 p-8 md:p-16 relative">
       <div className="max-w-6xl w-full">
         <div className="flex items-center gap-4 mb-6">
           <div className="w-16 h-16 rounded-2xl bg-cyan-100 flex items-center justify-center">
@@ -716,6 +739,8 @@ export function Stage2Slide() {
           </div>
         </motion.div>
       </div>
+
+      <SlideFooter variant="light" />
     </Slide>
   );
 }
@@ -741,7 +766,7 @@ export function Stage3Slide() {
   ];
 
   return (
-    <Slide className="flex items-center justify-center bg-white p-8 md:p-16">
+    <Slide className="flex items-center justify-center bg-white p-8 md:p-16 relative">
       <div className="max-w-6xl w-full">
         <div className="flex items-center gap-4 mb-6">
           <div className="w-16 h-16 rounded-2xl bg-emerald-100 flex items-center justify-center">
@@ -814,6 +839,8 @@ export function Stage3Slide() {
           </p>
         </motion.div>
       </div>
+
+      <SlideFooter variant="light" />
     </Slide>
   );
 }
@@ -843,7 +870,7 @@ export function Stage4Slide() {
   ];
 
   return (
-    <Slide className="flex items-center justify-center bg-slate-50 p-8 md:p-16">
+    <Slide className="flex items-center justify-center bg-slate-50 p-8 md:p-16 relative">
       <div className="max-w-6xl w-full">
         <div className="flex items-center gap-4 mb-6">
           <div className="w-16 h-16 rounded-2xl bg-purple-100 flex items-center justify-center">
@@ -902,6 +929,8 @@ export function Stage4Slide() {
           </p>
         </motion.div>
       </div>
+
+      <SlideFooter variant="light" />
     </Slide>
   );
 }
@@ -1018,6 +1047,8 @@ export function DeliveryModelSlide() {
           </p>
         </motion.div>
       </div>
+
+      <SlideFooter />
     </Slide>
   );
 }
@@ -1088,6 +1119,8 @@ export function OutcomesSlide() {
           Even a single well-chosen thin slice can often fund the next step through cost savings or revenue enablement.
         </motion.p>
       </div>
+
+      <SlideFooter />
     </Slide>
   );
 }
@@ -1174,6 +1207,8 @@ export function CaseStudiesSlide() {
           ))}
         </div>
       </div>
+
+      <SlideFooter />
     </Slide>
   );
 }
@@ -1207,7 +1242,7 @@ export function ConcernsSlide() {
   ];
 
   return (
-    <Slide className="flex items-center justify-center bg-slate-50 p-8 md:p-16">
+    <Slide className="flex items-center justify-center bg-slate-50 p-8 md:p-16 relative">
       <div className="max-w-5xl w-full">
         <AnimatedText className="text-sm uppercase tracking-widest text-sky-600 font-semibold mb-4">
           Common Concerns
@@ -1255,6 +1290,8 @@ export function ConcernsSlide() {
           </p>
         </motion.div>
       </div>
+
+      <SlideFooter variant="light" />
     </Slide>
   );
 }
@@ -1298,7 +1335,7 @@ export function IndustryApplicationsSlide() {
   ];
 
   return (
-    <Slide className="flex items-center justify-center bg-white p-8 md:p-12">
+    <Slide className="flex items-center justify-center bg-white p-8 md:p-12 relative">
       <div className="max-w-6xl w-full">
         <AnimatedText className="text-sm uppercase tracking-widest text-sky-600 font-semibold mb-4">
           Industry Applications
@@ -1341,6 +1378,8 @@ export function IndustryApplicationsSlide() {
           ))}
         </motion.div>
       </div>
+
+      <SlideFooter variant="light" />
     </Slide>
   );
 }
@@ -1364,7 +1403,7 @@ export function NextStepsSlide() {
   ];
 
   return (
-    <Slide className="flex items-center justify-center bg-gradient-to-br from-sky-600 to-cyan-600 p-8 md:p-16 relative overflow-hidden">
+    <Slide className="flex items-center justify-center bg-gradient-to-br from-sky-600 to-cyan-600 p-8 md:p-16 relative overflow-hidden pb-12">
       <div
         className="absolute inset-0 pointer-events-none opacity-10"
         style={{
@@ -1444,7 +1483,55 @@ export function NextStepsSlide() {
             Reply with 2–3 suitable time slots over the next two weeks to schedule.
           </p>
         </motion.div>
+      <SlideFooter />
       </div>
+    </Slide>
+  );
+}
+
+// ============================================
+// CLIENT INTEREST FORM
+// ============================================
+
+export function ClientInterestFormSlide() {
+  return (
+    <Slide className="flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 md:p-16 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute top-1/4 right-1/4 w-[400px] h-[400px] rounded-full opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(14, 165, 233, 0.3) 0%, transparent 70%)',
+          }}
+        />
+      </div>
+
+      <div className="max-w-2xl w-full z-10">
+        <div className="text-center mb-8">
+          <AnimatedText className="mb-4">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-sm font-medium">
+              <Mail className="w-4 h-4" />
+              Get Started
+            </span>
+          </AnimatedText>
+          <AnimatedText as="h2" className="text-3xl md:text-4xl font-bold text-white mb-4" delay={0.1}>
+            Interested in Learning More?
+          </AnimatedText>
+          <AnimatedText as="p" className="text-lg text-slate-300" delay={0.2}>
+            Share your details and we&apos;ll schedule a discovery session to discuss your modernization needs.
+          </AnimatedText>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <ClientInterestForm />
+        </motion.div>
+      </div>
+
+      <SlideFooter />
     </Slide>
   );
 }
@@ -1526,6 +1613,8 @@ export function EndSlide() {
           Application Modernization Services
         </motion.div>
       </div>
+
+      <SlideFooter />
     </Slide>
   );
 }
