@@ -4,7 +4,31 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A slide deck platform hosting multiple presentation decks at `deck.domain.com/topic1/`, `/topic2/`, etc. Each deck has AI-generated layouts and styling with no predefined templates. Slides are pure React/TSX components, not MDX.
+A slide deck platform hosting multiple presentation decks across multiple domains from a single codebase. Each deck has AI-generated layouts and styling with no predefined templates. Slides are pure React/TSX components, not MDX.
+
+## Multi-Site Architecture
+
+This codebase serves two domains with independent content:
+
+| Site ID | Domain | Decks |
+|---------|--------|-------|
+| `bytejournal` | deck.bytejournal.blog | cre-pov, resume-2hr, zendesk, example |
+| `cyaire` | deck.cyaire.com | ams-client-pitch, appmod, ams-gtm-26 |
+
+**Key files:**
+- `/lib/sites.ts` - Site configuration (domains, decks, metadata)
+- `/middleware.ts` - Restricts deck access based on `NEXT_PUBLIC_SITE` env var
+- `/app/home/*.tsx` - Site-specific homepage components
+
+**How it works:**
+1. `NEXT_PUBLIC_SITE` environment variable determines active site
+2. Middleware blocks access to decks not assigned to the current site
+3. Homepage, metadata, and sitemap are dynamically generated based on site config
+
+**Adding a deck to a site:**
+1. Create the deck in `/app/[deck-name]/`
+2. Add deck slug to the appropriate site in `/lib/sites.ts`
+3. Add deck slug to `allDecks` set in `/middleware.ts`
 
 ## Technology Stack
 
@@ -34,11 +58,17 @@ Commit after completing logical units of work (features, fixes, refactors) rathe
 
 ```
 /app
+  /home/               # Site-specific homepage components
+    BytejournalHome.tsx
+    CyaireHome.tsx
   /[topic-name]/       # Each deck is a folder
     page.tsx           # Deck entry point (default export component)
     slides.tsx         # AI-generated slide components
     styles.module.css  # Deck-specific styles (optional)
     /components        # Deck-specific components (optional)
+  page.tsx             # Dynamic homepage (renders based on NEXT_PUBLIC_SITE)
+  layout.tsx           # Dynamic metadata based on site config
+  sitemap.ts           # Dynamic sitemap based on site config
 
 /components
   /core                # Deck.tsx, Slide.tsx, Presenter.tsx
@@ -46,7 +76,11 @@ Commit after completing logical units of work (features, fixes, refactors) rathe
 
 /hooks                 # useSlideNavigation, useSlideIndex, useFullscreen, useReducedMotion
 
-/lib                   # transitions.ts, easings.ts, pdf.ts
+/lib
+  sites.ts             # Multi-site configuration
+  transitions.ts, easings.ts, pdf.ts
+
+/middleware.ts         # Restricts deck access by site
 
 /public/images/[topic-name]/  # Per-deck images
 ```
@@ -69,6 +103,8 @@ Commit after completing logical units of work (features, fixes, refactors) rathe
 2. Create `page.tsx` with default export component importing Deck and slides
 3. Create `slides.tsx` with named export React slide components
 4. Add images to `/public/images/[topic-name]/` if needed
+5. **Assign to a site** - Add deck slug to the appropriate site's `decks` array in `/lib/sites.ts`
+6. **Register in middleware** - Add deck slug to `allDecks` set in `/middleware.ts`
 
 ## Coding Conventions
 

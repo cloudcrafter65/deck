@@ -1,19 +1,29 @@
 import { MetadataRoute } from 'next';
+import { getCurrentSite } from '@/lib/sites';
 
+/**
+ * Dynamic sitemap based on current site configuration.
+ * Only includes decks assigned to the current site.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://deck.bytejournal.blog';
+  const site = getCurrentSite();
+  const baseUrl = site.baseUrl;
 
-  const routes = [
-    '',
-    '/appmod',
-    '/cre-pov',
-    '/ams-gtm-26',
-    '/resume-2hr',
-    '/resume-2hr/pov',
-    '/zendesk',
-    '/zendesk/whitepaper',
-    '/example',
-  ];
+  // Start with homepage
+  const routes: string[] = [''];
+
+  // Add deck routes for current site
+  for (const deck of site.decks) {
+    routes.push(`/${deck}`);
+
+    // Add known sub-routes for specific decks
+    if (deck === 'resume-2hr') {
+      routes.push(`/${deck}/pov`);
+    }
+    if (deck === 'zendesk') {
+      routes.push(`/${deck}/whitepaper`);
+    }
+  }
 
   return routes.map((route) => ({
     url: `${baseUrl}${route}`,

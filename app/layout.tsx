@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
+import { getCurrentSite } from '@/lib/sites';
 import './globals.css';
 
 const inter = Inter({
@@ -14,32 +15,22 @@ export const viewport: Viewport = {
   themeColor: '#000000',
 };
 
+// Dynamic metadata based on current site
+const site = getCurrentSite();
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://deck.bytejournal.blog'),
+  metadataBase: new URL(site.baseUrl),
   title: {
-    default: 'Vijayakumar G.A. | CTO AI Transformation',
-    template: '%s | Vijayakumar G.A.',
+    default: site.metadata.title,
+    template: `%s | ${site.name}`,
   },
-  description: 'APAC CTO-calibre technology executive with 20+ years in AI Transformation, Generative AI, and Go-To-Market execution. Trusted advisor to senior executives across APAC.',
-  keywords: [
-    'AI Transformation',
-    'CTO',
-    'Generative AI',
-    'GenAI',
-    'RAG',
-    'AI Agents',
-    'ML Ops',
-    'Enterprise AI',
-    'Digital Transformation',
-    'Technology Executive',
-    'APAC',
-    'Singapore',
-    'GTM Strategy',
-    'Executive Advisory',
-  ],
-  authors: [{ name: 'Vijayakumar G.A.', url: 'https://www.linkedin.com/in/vijayga' }],
-  creator: 'Vijayakumar G.A.',
-  publisher: 'Vijayakumar G.A.',
+  description: site.metadata.description,
+  keywords: site.metadata.keywords,
+  authors: site.metadata.author
+    ? [{ name: site.metadata.author, url: 'https://www.linkedin.com/in/vijayga' }]
+    : undefined,
+  creator: site.metadata.author,
+  publisher: site.metadata.author,
   robots: {
     index: true,
     follow: true,
@@ -54,27 +45,27 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://deck.bytejournal.blog',
-    siteName: 'Vijayakumar G.A.',
-    title: 'Vijayakumar G.A. | CTO AI Transformation',
-    description: 'APAC CTO-calibre technology executive with 20+ years in AI Transformation, Generative AI, and Go-To-Market execution.',
+    url: site.baseUrl,
+    siteName: site.name,
+    title: site.metadata.title,
+    description: site.metadata.description,
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Vijayakumar G.A. - CTO AI Transformation',
+        alt: site.metadata.title,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Vijayakumar G.A. | CTO AI Transformation',
-    description: 'APAC CTO-calibre technology executive with 20+ years in AI Transformation, Generative AI, and Go-To-Market execution.',
+    title: site.metadata.title,
+    description: site.metadata.description,
     images: ['/og-image.png'],
   },
   alternates: {
-    canonical: 'https://deck.bytejournal.blog',
+    canonical: site.baseUrl,
   },
   category: 'Technology',
 };
