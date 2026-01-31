@@ -17,7 +17,7 @@ This codebase serves two domains with independent content:
 
 **Key files:**
 - `/lib/sites.ts` - Site configuration (domains, decks, metadata)
-- `/middleware.ts` - Restricts deck access based on `NEXT_PUBLIC_SITE` env var
+- `/proxy.ts` - Restricts deck access based on `NEXT_PUBLIC_SITE` env var
 - `/app/home/*.tsx` - Site-specific homepage components
 
 **How it works:**
@@ -28,7 +28,7 @@ This codebase serves two domains with independent content:
 **Adding a deck to a site:**
 1. Create the deck in `/app/[deck-name]/`
 2. Add deck slug to the appropriate site in `/lib/sites.ts`
-3. Add deck slug to `allDecks` set in `/middleware.ts`
+3. Add deck slug to `allDecks` set in `/proxy.ts`
 
 ## Technology Stack
 
@@ -80,7 +80,7 @@ Commit after completing logical units of work (features, fixes, refactors) rathe
   sites.ts             # Multi-site configuration
   transitions.ts, easings.ts, pdf.ts
 
-/middleware.ts         # Restricts deck access by site
+/proxy.ts              # Restricts deck access by site (Next.js 16 proxy)
 
 /public/images/[topic-name]/  # Per-deck images
 ```
@@ -104,7 +104,7 @@ Commit after completing logical units of work (features, fixes, refactors) rathe
 3. Create `slides.tsx` with named export React slide components
 4. Add images to `/public/images/[topic-name]/` if needed
 5. **Assign to a site** - Add deck slug to the appropriate site's `decks` array in `/lib/sites.ts`
-6. **Register in middleware** - Add deck slug to `allDecks` set in `/middleware.ts`
+6. **Register in proxy** - Add deck slug to `allDecks` set in `/proxy.ts`
 
 ## Coding Conventions
 

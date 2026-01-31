@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 /**
- * Middleware to restrict deck access based on site configuration.
+ * Proxy to restrict deck access based on site configuration.
  *
  * Reads NEXT_PUBLIC_SITE env var to determine which decks are allowed.
  * Returns 404 for decks not assigned to the current site.
@@ -10,7 +10,7 @@ import type { NextRequest } from 'next/server';
 
 type SiteId = 'bytejournal' | 'cyaire';
 
-// Inline site config to avoid dynamic imports in middleware
+// Inline site config to avoid dynamic imports in proxy
 const siteDecks: Record<SiteId, string[]> = {
   bytejournal: ['cre-pov', 'resume-2hr', 'zendesk', 'example'],
   cyaire: ['ams-client-pitch', 'appmod', 'ams-gtm-26'],
@@ -27,7 +27,7 @@ const allDecks = new Set([
   'example',
 ]);
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // Extract the first path segment (deck slug)

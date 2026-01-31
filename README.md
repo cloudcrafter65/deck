@@ -128,7 +128,7 @@ Both projects deploy from the same codebase but serve different content based on
    // OR
    cyaire: ['ams-client-pitch', 'appmod', 'ams-gtm-26', 'your-new-deck']
    ```
-6. **Update middleware** in `/middleware.ts` - add the new deck slug to `allDecks` set
+6. **Update proxy** in `/proxy.ts` - add the new deck slug to `allDecks` set
 
 For detailed coding conventions and architecture details, see [CLAUDE.md](./CLAUDE.md).
 
