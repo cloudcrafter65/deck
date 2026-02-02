@@ -31,7 +31,7 @@ export const sites: Record<SiteId, SiteConfig> = {
     name: 'ByteJournal',
     domain: 'deck.bytejournal.blog',
     baseUrl: 'https://deck.bytejournal.blog',
-    decks: ['cre-pov', 'resume-2hr', 'zendesk', 'example'],
+    decks: ['cre-pov', 'resume-2hr', 'zendesk', 'example', 'sed-pov'],
     metadata: {
       title: 'Vijayakumar G.A. | CTO AI Transformation',
       description:
