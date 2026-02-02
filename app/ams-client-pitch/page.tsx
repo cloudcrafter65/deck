@@ -24,7 +24,7 @@ import { DeckTracker } from './components/DeckTracker';
 export default function AMSClientPitchDeck() {
   return (
     <>
-      <DeckTracker deckName="AMS Client Pitch" />
+      <DeckTracker deckName="AMS Client Pitch" totalSlides={18} />
       <Deck>
         <TitleSlide />
         <ProblemSlide />

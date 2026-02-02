@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Send, CheckCircle, AlertCircle, Loader2, Calendar } from 'lucide-react';
 
 interface FormData {
   name: string;
@@ -67,9 +67,21 @@ export function ClientInterestForm() {
       >
         <CheckCircle className="w-16 h-16 text-emerald-400 mx-auto mb-4" />
         <h3 className="text-2xl font-semibold text-white mb-2">Thank You!</h3>
-        <p className="text-white/80">
+        <p className="text-white/80 mb-6">
           We&apos;ve received your interest. Our team will be in touch within 24 hours.
         </p>
+        <div className="border-t border-white/20 pt-6">
+          <p className="text-white/60 text-sm mb-3">Want to get started sooner?</p>
+          <a
+            href="https://cal.com/vijayga/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white font-medium rounded-lg transition-all"
+          >
+            <Calendar className="w-5 h-5" />
+            Schedule Your 30-Min Discovery Call Now
+          </a>
+        </div>
       </motion.div>
     );
   }
@@ -189,6 +201,19 @@ export function ClientInterestForm() {
       <p className="text-center text-white/50 text-xs">
         We respect your privacy. Your information will only be used to contact you about this inquiry.
       </p>
+
+      <div className="text-center pt-4 border-t border-white/10">
+        <p className="text-white/60 text-sm mb-2">Prefer to book directly?</p>
+        <a
+          href="https://cal.com/vijayga/30min"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 transition-colors text-sm font-medium"
+        >
+          <Calendar className="w-4 h-4" />
+          Schedule a 30-min call
+        </a>
+      </div>
     </form>
   );
 }

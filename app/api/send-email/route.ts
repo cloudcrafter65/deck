@@ -4,7 +4,7 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const NOTIFY_EMAIL = 'vijay@cyaire.com';
 
 interface EmailPayload {
-  type: 'interest' | 'view';
+  type: 'interest' | 'view' | 'engagement';
   data: {
     // For interest form
     name?: string;
@@ -20,7 +20,29 @@ interface EmailPayload {
     referrer?: string;
     timestamp?: string;
     deckName?: string;
+    screenSize?: string;
+    language?: string;
+    // Enhanced view tracking
+    visitorId?: string;
+    visitCount?: number;
+    isReturnVisitor?: boolean;
+    utmSource?: string;
+    utmMedium?: string;
+    utmCampaign?: string;
+    // For engagement tracking
+    sessionDuration?: number;
+    slidesViewed?: number[];
+    furthestSlide?: number;
+    timePerSlide?: Record<number, number>;
+    totalSlides?: number;
   };
+}
+
+function formatDuration(seconds: number): string {
+  if (seconds < 60) return `${seconds}s`;
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return secs > 0 ? `${mins}m ${secs}s` : `${mins}m`;
 }
 
 export async function POST(request: NextRequest) {
@@ -69,13 +91,38 @@ export async function POST(request: NextRequest) {
         </p>
       `;
     } else if (payload.type === 'view') {
-      subject = `[Deck View] ${payload.data.deckName || 'AMS Client Pitch'} - ${payload.data.country || 'Unknown Location'}`;
+      const returnLabel = payload.data.isReturnVisitor
+        ? ` (Return Visit #${payload.data.visitCount})`
+        : ' (New Visitor)';
+      subject = `[Deck View] ${payload.data.deckName || 'AMS Client Pitch'} - ${payload.data.country || 'Unknown'}${returnLabel}`;
+
+      // Build UTM info row if any UTM params exist
+      const hasUtm = payload.data.utmSource || payload.data.utmMedium || payload.data.utmCampaign;
+      const utmParts = [];
+      if (payload.data.utmSource) utmParts.push(`source=${payload.data.utmSource}`);
+      if (payload.data.utmMedium) utmParts.push(`medium=${payload.data.utmMedium}`);
+      if (payload.data.utmCampaign) utmParts.push(`campaign=${payload.data.utmCampaign}`);
+      const utmRow = hasUtm
+        ? `<tr>
+            <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">UTM Params</td>
+            <td style="padding: 10px; border: 1px solid #e2e8f0;">${utmParts.join(', ')}</td>
+          </tr>`
+        : '';
+
       htmlContent = `
         <h2>New Deck View</h2>
         <table style="border-collapse: collapse; width: 100%; max-width: 600px;">
           <tr>
             <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">Deck</td>
             <td style="padding: 10px; border: 1px solid #e2e8f0;">${payload.data.deckName || 'AMS Client Pitch'}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">Visitor ID</td>
+            <td style="padding: 10px; border: 1px solid #e2e8f0; font-family: monospace; font-size: 12px;">${payload.data.visitorId || 'Unknown'}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">Visit Count</td>
+            <td style="padding: 10px; border: 1px solid #e2e8f0;">${payload.data.isReturnVisitor ? `Return visitor (#${payload.data.visitCount})` : 'First visit'}</td>
           </tr>
           <tr>
             <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">IP Address</td>
@@ -85,6 +132,7 @@ export async function POST(request: NextRequest) {
             <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">Location</td>
             <td style="padding: 10px; border: 1px solid #e2e8f0;">${payload.data.city ? `${payload.data.city}, ` : ''}${payload.data.country || 'Unknown'}</td>
           </tr>
+          ${utmRow}
           <tr>
             <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">User Agent</td>
             <td style="padding: 10px; border: 1px solid #e2e8f0; font-size: 12px;">${payload.data.userAgent || 'Unknown'}</td>
@@ -97,6 +145,65 @@ export async function POST(request: NextRequest) {
             <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">Timestamp</td>
             <td style="padding: 10px; border: 1px solid #e2e8f0;">${payload.data.timestamp || new Date().toISOString()}</td>
           </tr>
+        </table>
+      `;
+    } else if (payload.type === 'engagement') {
+      const slidesCount = payload.data.slidesViewed?.length || 0;
+      const totalSlides = payload.data.totalSlides || 18;
+      const durationFormatted = formatDuration(payload.data.sessionDuration || 0);
+
+      subject = `[Deck Engagement] ${payload.data.deckName || 'AMS Client Pitch'} - ${slidesCount}/${totalSlides} slides in ${durationFormatted}`;
+
+      // Build time per slide rows
+      const timePerSlide = payload.data.timePerSlide || {};
+      const slideRows = Object.entries(timePerSlide)
+        .sort(([a], [b]) => parseInt(a) - parseInt(b))
+        .map(
+          ([slide, time]) => `
+          <tr>
+            <td style="padding: 8px; border: 1px solid #e2e8f0; text-align: center;">Slide ${slide}</td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0; text-align: center;">${formatDuration(time as number)}</td>
+          </tr>
+        `
+        )
+        .join('');
+
+      htmlContent = `
+        <h2>Deck Engagement Summary</h2>
+        <table style="border-collapse: collapse; width: 100%; max-width: 600px; margin-bottom: 20px;">
+          <tr>
+            <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">Deck</td>
+            <td style="padding: 10px; border: 1px solid #e2e8f0;">${payload.data.deckName || 'AMS Client Pitch'}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">Visitor ID</td>
+            <td style="padding: 10px; border: 1px solid #e2e8f0; font-family: monospace; font-size: 12px;">${payload.data.visitorId || 'Unknown'}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">Session Duration</td>
+            <td style="padding: 10px; border: 1px solid #e2e8f0;">${durationFormatted}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">Slides Viewed</td>
+            <td style="padding: 10px; border: 1px solid #e2e8f0;">${slidesCount} of ${totalSlides}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">Furthest Slide</td>
+            <td style="padding: 10px; border: 1px solid #e2e8f0;">Slide ${payload.data.furthestSlide || 1}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; background: #f8fafc;">Slides Visited</td>
+            <td style="padding: 10px; border: 1px solid #e2e8f0;">${(payload.data.slidesViewed || []).join(', ') || 'None'}</td>
+          </tr>
+        </table>
+
+        <h3>Time Per Slide</h3>
+        <table style="border-collapse: collapse; width: 100%; max-width: 400px;">
+          <tr>
+            <th style="padding: 8px; border: 1px solid #e2e8f0; background: #f8fafc;">Slide</th>
+            <th style="padding: 8px; border: 1px solid #e2e8f0; background: #f8fafc;">Time Spent</th>
+          </tr>
+          ${slideRows || '<tr><td colspan="2" style="padding: 8px; text-align: center;">No data</td></tr>'}
         </table>
       `;
     } else {
