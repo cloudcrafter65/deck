@@ -63,23 +63,15 @@ export default function CyaireHome() {
                 We partner with enterprises to transform legacy systems, adopt AI at scale,
                 and build technology capabilities that drive measurable business outcomes.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href="https://cal.com/vijayga/30min"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-600 hover:to-sky-600 text-white font-medium rounded-lg transition-all"
-                >
-                  Schedule a Consultation
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-                <a
-                  href="mailto:vijay@cyaire.com"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-slate-600 hover:border-slate-500 text-white font-medium rounded-lg transition-all"
-                >
-                  Contact Us
-                </a>
-              </div>
+              <a
+                href="https://cyaire.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-600 hover:to-sky-600 text-white font-medium rounded-lg transition-all"
+              >
+                Learn More
+                <ArrowRight className="w-4 h-4" />
+              </a>
             </motion.div>
 
             {/* Right - Capabilities */}
@@ -123,22 +115,14 @@ export default function CyaireHome() {
           <p className="text-slate-500 text-sm">
             &copy; {new Date().getFullYear()} Cyaire. All rights reserved.
           </p>
-          <div className="flex items-center gap-6 text-sm">
-            <a
-              href="https://www.linkedin.com/company/cyaire"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-slate-400 hover:text-white transition-colors"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="mailto:vijay@cyaire.com"
-              className="text-slate-400 hover:text-white transition-colors"
-            >
-              vijay@cyaire.com
-            </a>
-          </div>
+          <a
+            href="https://cyaire.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-slate-400 hover:text-white transition-colors text-sm"
+          >
+            cyaire.com
+          </a>
         </div>
       </footer>
     </div>
