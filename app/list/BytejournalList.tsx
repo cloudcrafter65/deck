@@ -29,6 +29,12 @@ const decks = [
     subtitle: 'Template',
     description: 'Sample presentation showcasing deck capabilities.',
   },
+  {
+    slug: 'sed-pov',
+    title: 'The Technical Close',
+    subtitle: 'Enterprise SaaS',
+    description: 'Where trust is won or lost in enterprise software deals.',
+  },
 ];
 
 export default function BytejournalList() {

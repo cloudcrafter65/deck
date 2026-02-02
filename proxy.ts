@@ -12,7 +12,7 @@ type SiteId = 'bytejournal' | 'cyaire';
 
 // Inline site config to avoid dynamic imports in proxy
 const siteDecks: Record<SiteId, string[]> = {
-  bytejournal: ['cre-pov', 'resume-2hr', 'zendesk', 'example'],
+  bytejournal: ['cre-pov', 'resume-2hr', 'zendesk', 'example', 'sed-pov'],
   cyaire: ['ams-client-pitch', 'appmod', 'ams-gtm-26'],
 };
 
@@ -25,6 +25,7 @@ const allDecks = new Set([
   'resume-2hr',
   'zendesk',
   'example',
+  'sed-pov',
 ]);
 
 export function proxy(request: NextRequest) {
