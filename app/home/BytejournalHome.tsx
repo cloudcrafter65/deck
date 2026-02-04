@@ -58,6 +58,27 @@ const skills = [
   'Executive Advisory',
 ];
 
+const featuredArticles = [
+  {
+    title: "Gartner's 2026 IT Spending Forecast ($6.08T)",
+    description: 'The C-Suite Mandate for AI Proficiency',
+    date: 'Nov 10, 2025',
+    url: 'https://bytejournal.blog/posts/gartner-2026-it-spending-forecast-ai-proficiency/',
+  },
+  {
+    title: 'Beyond the Chatbot: Meet the New AI Agents',
+    description: 'How autonomous agents are reshaping enterprise workflows',
+    date: 'Jun 10, 2025',
+    url: 'https://bytejournal.blog/posts/beyond-the-chatbot-meet-the-new-ai-agents/',
+  },
+  {
+    title: 'The Silent Shift to Sovereign Cloud',
+    description: 'Why data residency is just the beginning',
+    date: 'Oct 13, 2025',
+    url: 'https://bytejournal.blog/posts/sovereign-cloud-beyond-data-residency/',
+  },
+];
+
 export default function BytejournalHome() {
   return (
     <>
@@ -201,6 +222,58 @@ export default function BytejournalHome() {
                 <span className="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm">
                   M.Eng — NUS
                 </span>
+              </motion.div>
+
+              {/* Featured Insights */}
+              <motion.div
+                className="mt-10"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 }}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-xs tracking-[0.2em] text-gray-400">FEATURED INSIGHTS</p>
+                  <a
+                    href="https://bytejournal.blog"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1"
+                  >
+                    View all
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                </div>
+                <div className="space-y-3">
+                  {featuredArticles.map((article, i) => (
+                    <motion.a
+                      key={article.title}
+                      href={article.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block p-4 bg-gray-50 border border-gray-100 rounded-lg hover:border-gray-300 hover:bg-gray-100 transition-all group"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1.0 + i * 0.1 }}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-gray-900 font-medium text-sm leading-snug group-hover:text-gray-700 transition-colors">
+                            {article.title}
+                          </h3>
+                          <p className="text-gray-500 text-xs mt-1">{article.description}</p>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="text-gray-400 text-xs">{article.date}</span>
+                          <svg className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </div>
+                      </div>
+                    </motion.a>
+                  ))}
+                </div>
               </motion.div>
             </motion.div>
           </div>
