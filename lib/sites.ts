@@ -17,6 +17,7 @@ export interface SiteConfig {
   domain: string;
   baseUrl: string;
   decks: string[];
+  protected: boolean;  // If true, all decks on this site require auth
   metadata: {
     title: string;
     description: string;
@@ -32,6 +33,7 @@ export const sites: Record<SiteId, SiteConfig> = {
     domain: 'deck.bytejournal.blog',
     baseUrl: 'https://deck.bytejournal.blog',
     decks: ['cre-pov', 'resume-2hr', 'zendesk', 'example', 'sed-pov'],
+    protected: false,  // Public decks — no auth required
     metadata: {
       title: 'Vijayakumar G.A. | CTO AI Transformation',
       description:
@@ -59,6 +61,7 @@ export const sites: Record<SiteId, SiteConfig> = {
     domain: 'deck.cyaire.com',
     baseUrl: 'https://deck.cyaire.com',
     decks: ['ams-client-pitch', 'appmod', 'ams-gtm-26'],
+    protected: true,  // Private decks — auth required
     metadata: {
       title: 'Cyaire | AI Transformation & Application Modernization',
       description:

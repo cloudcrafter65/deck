@@ -6,11 +6,14 @@ import type { NextRequest } from 'next/server';
  *
  * Reads NEXT_PUBLIC_SITE env var to determine which decks are allowed.
  * Returns 404 for decks not assigned to the current site.
+ *
+ * Note: Auth (session checking) is handled in middleware.ts.
+ * This module only handles site/deck routing.
  */
 
 type SiteId = 'bytejournal' | 'cyaire';
 
-// Inline site config to avoid dynamic imports in proxy
+// Inline site config to avoid dynamic imports in middleware
 const siteDecks: Record<SiteId, string[]> = {
   bytejournal: ['cre-pov', 'resume-2hr', 'zendesk', 'example', 'sed-pov'],
   cyaire: ['ams-client-pitch', 'appmod', 'ams-gtm-26'],
@@ -51,17 +54,3 @@ export function proxy(request: NextRequest) {
 
   return NextResponse.next();
 }
-
-export const config = {
-  matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico, sitemap.xml, robots.txt (SEO files)
-     * - api routes
-     * - public files with extensions
-     */
-    '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|api|.*\\.[a-zA-Z]+$).*)',
-  ],
-};
