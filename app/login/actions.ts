@@ -4,35 +4,29 @@ import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabase-server';
 
 /**
- * Sends a magic link to the given email address.
- * The link will redirect to /auth/callback?next=<nextPath> on click.
+ * Signs in with email and password.
+ * On success, redirects to the intended deck (or home).
  */
-export async function sendMagicLink(formData: FormData) {
+export async function signIn(formData: FormData) {
     const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
     const next = (formData.get('next') as string) || '/';
 
-    if (!email) return;
+    if (!email || !password) {
+        redirect(`/login?error=missing_fields&next=${encodeURIComponent(next)}`);
+    }
 
     const supabase = await createSupabaseServerClient();
 
-    const siteUrl =
-        process.env.NEXT_PUBLIC_SITE === 'cyaire'
-            ? 'https://deck.cyaire.com'
-            : process.env.NEXT_PUBLIC_SITE === 'bytejournal'
-                ? 'https://deck.bytejournal.blog'
-                : 'http://localhost:3000';
-
-    const { error } = await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signInWithPassword({
         email,
-        options: {
-            emailRedirectTo: `${siteUrl}/auth/callback?next=${encodeURIComponent(next)}`,
-        },
+        password,
     });
 
     if (error) {
-        console.error('Magic link error:', error.message);
+        console.error('Sign in error:', error.message);
         redirect(`/login?error=${encodeURIComponent(error.message)}&next=${encodeURIComponent(next)}`);
     }
 
-    redirect(`/login?sent=1&next=${encodeURIComponent(next)}`);
+    redirect(next);
 }
