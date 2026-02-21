@@ -10,75 +10,80 @@ import { proxy } from './lib/proxy';
  * 3. Redirects unauthenticated users away from protected decks
  */
 export async function middleware(request: NextRequest) {
-    let supabaseResponse = NextResponse.next({ request });
-
-    // Create a Supabase client that can read/write cookies in middleware
-    const supabase = createServerClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        {
-            cookies: {
-                getAll() {
-                    return request.cookies.getAll();
-                },
-                setAll(cookiesToSet) {
-                    cookiesToSet.forEach(({ name, value }) =>
-                        request.cookies.set(name, value)
-                    );
-                    supabaseResponse = NextResponse.next({ request });
-                    cookiesToSet.forEach(({ name, value, options }) =>
-                        supabaseResponse.cookies.set(name, value, options)
-                    );
-                },
-            },
-        }
-    );
-
-    // IMPORTANT: Always call getUser() — it refreshes the session token.
-    // Do not add any logic between createServerClient and getUser().
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
-
-    // Run site/deck routing logic (returns 404 for decks not on this site)
+    // Run site/deck routing logic first (returns 404 for decks not on this site)
     const proxyResponse = proxy(request);
     if (proxyResponse.status === 404) {
         return proxyResponse;
     }
 
-    // Check if this deck requires auth
+    // Check if this route is a protected deck
     const pathname = request.nextUrl.pathname;
     const segments = pathname.split('/').filter(Boolean);
     const deckSlug = segments[0];
 
-    if (deckSlug && isProtectedDeck(deckSlug)) {
-        if (!user) {
-            // Unauthenticated — redirect to login with return path
-            const loginUrl = new URL('/login', request.url);
-            loginUrl.searchParams.set('next', pathname);
-            const redirectResponse = NextResponse.redirect(loginUrl);
-            supabaseResponse.cookies.getAll().forEach((cookie) => {
-                redirectResponse.cookies.set(cookie.name, cookie.value, cookie);
-            });
-            return redirectResponse;
-        }
+    // Only initialize Supabase for protected deck routes
+    if (!deckSlug || !isProtectedDeck(deckSlug)) {
+        return NextResponse.next({ request });
+    }
 
-        // Authenticated — check per-deck access
-        const { data } = await supabase
-            .from('deck_access')
-            .select('id')
-            .eq('deck_slug', deckSlug)
-            .limit(1)
-            .single();
+    // Protected deck — need Supabase auth
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-        if (!data) {
-            const unauthorizedUrl = new URL('/unauthorized', request.url);
-            const redirectResponse = NextResponse.redirect(unauthorizedUrl);
-            supabaseResponse.cookies.getAll().forEach((cookie) => {
-                redirectResponse.cookies.set(cookie.name, cookie.value, cookie);
-            });
-            return redirectResponse;
-        }
+    if (!supabaseUrl || !supabaseKey) {
+        // Supabase not configured — allow through (dev/bytejournal site)
+        return NextResponse.next({ request });
+    }
+
+    let supabaseResponse = NextResponse.next({ request });
+
+    const supabase = createServerClient(supabaseUrl, supabaseKey, {
+        cookies: {
+            getAll() {
+                return request.cookies.getAll();
+            },
+            setAll(cookiesToSet) {
+                cookiesToSet.forEach(({ name, value }) =>
+                    request.cookies.set(name, value)
+                );
+                supabaseResponse = NextResponse.next({ request });
+                cookiesToSet.forEach(({ name, value, options }) =>
+                    supabaseResponse.cookies.set(name, value, options)
+                );
+            },
+        },
+    });
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+        // Unauthenticated — redirect to login with return path
+        const loginUrl = new URL('/login', request.url);
+        loginUrl.searchParams.set('next', pathname);
+        const redirectResponse = NextResponse.redirect(loginUrl);
+        supabaseResponse.cookies.getAll().forEach((cookie) => {
+            redirectResponse.cookies.set(cookie.name, cookie.value, cookie);
+        });
+        return redirectResponse;
+    }
+
+    // Authenticated — check per-deck access
+    const { data } = await supabase
+        .from('deck_access')
+        .select('id')
+        .eq('deck_slug', deckSlug)
+        .limit(1)
+        .single();
+
+    if (!data) {
+        const unauthorizedUrl = new URL('/unauthorized', request.url);
+        const redirectResponse = NextResponse.redirect(unauthorizedUrl);
+        supabaseResponse.cookies.getAll().forEach((cookie) => {
+            redirectResponse.cookies.set(cookie.name, cookie.value, cookie);
+        });
+        return redirectResponse;
     }
 
     return supabaseResponse;
