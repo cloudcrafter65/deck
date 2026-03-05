@@ -32,7 +32,7 @@ export const sites: Record<SiteId, SiteConfig> = {
     name: 'ByteJournal',
     domain: 'deck.bytejournal.blog',
     baseUrl: 'https://deck.bytejournal.blog',
-    decks: ['cre-pov', 'resume-2hr', 'zendesk', 'example', 'sed-pov'],
+    decks: ['cre-pov', 'resume-2hr', 'zendesk', 'example', 'sed-pov', 'gcp-fsi-arch'],
     protected: false,  // Public decks — no auth required
     metadata: {
       title: 'Vijayakumar G.A. | CTO AI Transformation',

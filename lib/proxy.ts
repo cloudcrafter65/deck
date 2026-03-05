@@ -15,7 +15,7 @@ type SiteId = 'bytejournal' | 'cyaire';
 
 // Inline site config to avoid dynamic imports in middleware
 const siteDecks: Record<SiteId, string[]> = {
-  bytejournal: ['cre-pov', 'resume-2hr', 'zendesk', 'example', 'sed-pov'],
+  bytejournal: ['cre-pov', 'resume-2hr', 'zendesk', 'example', 'sed-pov', 'gcp-fsi-arch'],
   cyaire: ['ams-client-pitch', 'appmod', 'ams-gtm-26'],
 };
 
@@ -29,6 +29,7 @@ const allDecks = new Set([
   'zendesk',
   'example',
   'sed-pov',
+  'gcp-fsi-arch',
 ]);
 
 export function proxy(request: NextRequest) {
