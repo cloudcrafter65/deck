@@ -1,4 +1,7 @@
+'use client';
+
 import { Deck } from '@/components/core';
+import { DeckTracker } from './components/DeckTracker';
 import {
   TitleSlide,
   MarketRealitySlide,
@@ -19,7 +22,9 @@ import {
 
 export default function GcpFsiArchDeck() {
   return (
-    <Deck>
+    <>
+      <DeckTracker deckName="GCP FSI Architecture" totalSlides={15} />
+      <Deck>
       <TitleSlide />
       <MarketRealitySlide />
       <BlockerSlide />
@@ -35,6 +40,7 @@ export default function GcpFsiArchDeck() {
       <ProfileSlide />
       <ExecutionPlanSlide />
       <ConclusionSlide />
-    </Deck>
+      </Deck>
+    </>
   );
 }
