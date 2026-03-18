@@ -62,7 +62,7 @@ export function TitleSlide() {
       {/* Left accent bar */}
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-4xl w-full px-16 relative z-10">
+      <div className="max-w-6xl w-full px-20 relative z-10">
         <motion.div
           variants={stagger}
           initial="hidden"
@@ -130,7 +130,7 @@ export function ParadoxSlide() {
     <Slide className="flex items-center justify-center bg-stone-50 relative">
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-5xl w-full px-16 relative z-10">
+      <div className="max-w-7xl w-full px-20 relative z-10">
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.div variants={fadeUp}>
             <SectionLabel>The Modernisation Paradox</SectionLabel>
@@ -192,7 +192,7 @@ export function FailurePatternSlide() {
     <Slide className="flex items-center justify-center bg-white relative">
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-5xl w-full px-16 relative z-10">
+      <div className="max-w-7xl w-full px-20 relative z-10">
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.div variants={fadeUp}>
             <SectionLabel>The Pattern of Failure</SectionLabel>
@@ -302,7 +302,7 @@ export function RootCauseSlide() {
     <Slide className="flex items-center justify-center bg-slate-900 relative">
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-4xl w-full px-16 relative z-10">
+      <div className="max-w-6xl w-full px-20 relative z-10">
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.p
             variants={fadeUp}
@@ -400,7 +400,7 @@ export function TeamTopologiesSlide() {
     <Slide className="flex items-center justify-center bg-white relative">
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-5xl w-full px-16 relative z-10">
+      <div className="max-w-7xl w-full px-20 relative z-10">
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.div variants={fadeUp}>
             <SectionLabel>Team Topologies — Skelton & Pais</SectionLabel>
@@ -477,7 +477,7 @@ export function AIForcingFunctionSlide() {
     <Slide className="flex items-center justify-center bg-stone-50 relative">
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-5xl w-full px-16 relative z-10">
+      <div className="max-w-7xl w-full px-20 relative z-10">
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.div variants={fadeUp}>
             <SectionLabel>The New Forcing Function</SectionLabel>
@@ -566,7 +566,7 @@ export function AIRequirementsSlide() {
     <Slide className="flex items-center justify-center bg-white relative">
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-5xl w-full px-16 relative z-10">
+      <div className="max-w-7xl w-full px-20 relative z-10">
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.div variants={fadeUp}>
             <SectionLabel>Architecture Requirements for AI</SectionLabel>
@@ -635,7 +635,7 @@ export function EvolutionaryArchSlide() {
     <Slide className="flex items-center justify-center bg-stone-50 relative">
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-5xl w-full px-16 relative z-10">
+      <div className="max-w-7xl w-full px-20 relative z-10">
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.div variants={fadeUp}>
             <SectionLabel>From Projects to Disciplines</SectionLabel>
@@ -744,7 +744,7 @@ export function DataProblemSlide() {
     <Slide className="flex items-center justify-center bg-stone-50 relative">
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-5xl w-full px-16 relative z-10">
+      <div className="max-w-7xl w-full px-20 relative z-10">
         <motion.div variants={stagger} initial="hidden" animate="visible">
 
           {/* Header */}
@@ -832,7 +832,7 @@ export function ContrarianSlide() {
     <Slide className="flex items-center justify-center bg-slate-900 relative">
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-5xl w-full px-16 relative z-10">
+      <div className="max-w-7xl w-full px-20 relative z-10">
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.p
             variants={fadeUp}
@@ -916,7 +916,7 @@ export function IndustryEvidenceSlide() {
     <Slide className="flex items-center justify-center bg-stone-50 relative">
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-5xl w-full px-16 relative z-10">
+      <div className="max-w-7xl w-full px-20 relative z-10">
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.div variants={fadeUp}>
             <SectionLabel>Where Disciplined Modernisation Delivers</SectionLabel>
@@ -1030,7 +1030,7 @@ export function ThinSliceSlide() {
     <Slide className="flex items-center justify-center bg-white relative">
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-5xl w-full px-16 relative z-10">
+      <div className="max-w-7xl w-full px-20 relative z-10">
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.div variants={fadeUp}>
             <SectionLabel>The Practitioner&apos;s Playbook</SectionLabel>
@@ -1094,6 +1094,77 @@ export function ThinSliceSlide() {
   );
 }
 
+// ─── Slide 12 (new): CTO Hard Questions ─────────────────────────────────────
+
+export function CTOQuestionsSlide() {
+  const questions = [
+    {
+      q: 'How do you prevent architectural drift across slices?',
+      a: 'Fitness functions enforced in CI/CD pipelines — automated tests that fail builds violating architectural intent. Pair with a lightweight ADR process for cross-cutting decisions and a platform team that builds the paved road: the blessed path of infrastructure, observability, and security controls that makes the right thing the easy thing.',
+      tag: 'Governance',
+    },
+    {
+      q: 'Who owns the intermediary layer?',
+      a: 'A dedicated platform team. The API gateway, service mesh, and event bus enabling strangler-fig decomposition are themselves complex systems. The interaction mode must be explicitly X-as-a-service — stream-aligned teams consume platform capabilities through self-serve interfaces, not through tickets and waiting.',
+      tag: 'Team structure',
+    },
+    {
+      q: 'What happens between slices?',
+      a: 'The legacy system does not pause. You need explicit parallel-evolution strategies: feature flags controlling routing between legacy and modern paths, branch-by-abstraction for new interfaces, and ownership boundaries preventing the monolith from growing new coupling faster than you decompose old coupling.',
+      tag: 'Execution',
+    },
+    {
+      q: 'When should you not thin-slice?',
+      a: 'Real-time payment switches, safety-critical systems, and tightly coupled transaction engines with nanosecond latency requirements sometimes cannot be incrementally decomposed. Some systems are better replaced wholesale in a planned cutover window. Acknowledging this separates a trusted advisor from a methodology salesperson.',
+      tag: 'Know the limits',
+    },
+  ];
+
+  return (
+    <Slide className="flex items-center justify-center bg-white relative">
+      <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
+
+      <div className="max-w-7xl w-full px-20 relative z-10">
+        <motion.div variants={stagger} initial="hidden" animate="visible">
+
+          <motion.div variants={fadeUp}>
+            <SectionLabel>Thin-Slice — The Hard Questions</SectionLabel>
+          </motion.div>
+
+          <motion.h2
+            variants={fadeUp}
+            className="text-4xl font-light text-slate-900 tracking-tight leading-tight mb-8"
+          >
+            Failure modes practitioners rarely discuss openly.
+          </motion.h2>
+
+          <motion.div variants={stagger} className="grid grid-cols-2 gap-px bg-slate-100">
+            {questions.map((item, i) => (
+              <motion.div key={i} variants={fadeUp} className="bg-white p-7 flex flex-col gap-3">
+                {/* Tag */}
+                <span className="self-start text-[10px] font-semibold tracking-widest uppercase text-amber-600 bg-amber-50 px-2 py-0.5">
+                  {item.tag}
+                </span>
+                {/* Question */}
+                <p className="text-sm font-semibold text-slate-900 italic leading-snug">
+                  &ldquo;{item.q}&rdquo;
+                </p>
+                {/* Answer */}
+                <p className="text-xs text-slate-500 font-light leading-relaxed flex-1">
+                  {item.a}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+        </motion.div>
+      </div>
+
+      <SlideFooter label="12" />
+    </Slide>
+  );
+}
+
 // ─── Slide 13: Human Architecture ────────────────────────────────────────────
 
 export function HumanArchSlide() {
@@ -1101,7 +1172,7 @@ export function HumanArchSlide() {
     <Slide className="flex items-center justify-center bg-stone-50 relative">
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-5xl w-full px-16 relative z-10">
+      <div className="max-w-7xl w-full px-20 relative z-10">
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.div variants={fadeUp}>
             <SectionLabel>The Human Architecture</SectionLabel>
@@ -1163,7 +1234,7 @@ export function HumanArchSlide() {
         </motion.div>
       </div>
 
-      <SlideFooter label="12" />
+      <SlideFooter label="13" />
     </Slide>
   );
 }
@@ -1184,7 +1255,7 @@ export function CodaSlide() {
       />
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
 
-      <div className="max-w-4xl w-full px-16 relative z-10">
+      <div className="max-w-6xl w-full px-20 relative z-10">
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.p
             variants={fadeUp}

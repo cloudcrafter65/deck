@@ -12,6 +12,7 @@ import {
   ContrarianSlide,
   IndustryEvidenceSlide,
   ThinSliceSlide,
+  CTOQuestionsSlide,
   HumanArchSlide,
   CodaSlide,
 } from './slides';
@@ -31,6 +32,7 @@ export default function ArchReadinessDeck() {
       <ContrarianSlide />
       <IndustryEvidenceSlide />
       <ThinSliceSlide />
+      <CTOQuestionsSlide />
       <HumanArchSlide />
       <CodaSlide />
     </Deck>
