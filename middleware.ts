@@ -98,6 +98,7 @@ function isProtectedDeck(slug: string): boolean {
         'ams-client-pitch',
         'appmod',
         'ams-gtm-26',
+        'arch-readiness',
     ]);
     return protectedDecks.has(slug);
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, Zap, Shield } from 'lucide-react';
+import { ArrowRight, Sparkles, Zap, Shield, Presentation } from 'lucide-react';
 
 const capabilities = [
   {
@@ -108,6 +108,63 @@ export default function CyaireHome() {
           </div>
         </div>
       </main>
+
+      {/* Decks Section */}
+      <section className="border-t border-slate-700/50">
+        <div className="max-w-6xl mx-auto px-6 py-12">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+          >
+            <div className="flex items-center gap-3 mb-8">
+              <Presentation className="w-5 h-5 text-cyan-400" />
+              <h2 className="text-lg font-semibold text-white">Presentations</h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                {
+                  slug: 'ams-client-pitch',
+                  title: 'AMS Client Pitch',
+                  description: 'Application modernisation client engagement deck',
+                },
+                {
+                  slug: 'appmod',
+                  title: 'AppMod Strategy',
+                  description: 'Strategic business plan 2026–2028',
+                },
+                {
+                  slug: 'ams-gtm-26',
+                  title: 'AMS GTM 2026',
+                  description: 'Go-to-market pitch for application modernisation',
+                },
+                {
+                  slug: 'arch-readiness',
+                  title: 'Architecture of Readiness',
+                  description: 'App modernisation in the agentic era — thought leadership',
+                },
+              ].map((deck, index) => (
+                <motion.a
+                  key={deck.slug}
+                  href={`/${deck.slug}/`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7 + index * 0.08, duration: 0.4 }}
+                  className="group p-5 bg-slate-800/50 border border-slate-700/50 rounded-xl hover:border-cyan-500/50 hover:bg-slate-800 transition-all"
+                >
+                  <p className="text-sm font-semibold text-white mb-1 group-hover:text-cyan-400 transition-colors">
+                    {deck.title}
+                  </p>
+                  <p className="text-xs text-slate-500 leading-relaxed mb-4">{deck.description}</p>
+                  <span className="inline-flex items-center gap-1 text-xs text-cyan-500 font-medium">
+                    Open <ArrowRight className="w-3 h-3" />
+                  </span>
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="border-t border-slate-700/50">

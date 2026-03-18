@@ -60,7 +60,7 @@ export const sites: Record<SiteId, SiteConfig> = {
     name: 'Cyaire',
     domain: 'deck.cyaire.com',
     baseUrl: 'https://deck.cyaire.com',
-    decks: ['ams-client-pitch', 'appmod', 'ams-gtm-26'],
+    decks: ['ams-client-pitch', 'appmod', 'ams-gtm-26', 'arch-readiness'],
     protected: true,  // Private decks — auth required
     metadata: {
       title: 'Cyaire | AI Transformation & Application Modernization',
