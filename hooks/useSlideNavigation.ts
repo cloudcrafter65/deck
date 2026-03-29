@@ -91,6 +91,11 @@ export function useSlideNavigation(totalSlides: number) {
           e.preventDefault();
           goToSlide(totalSlides - 1);
           break;
+        case 't':
+        case 'T':
+          e.preventDefault();
+          goToSlide(2); // TOC is always slide 3 (index 2)
+          break;
         case '?':
           e.preventDefault();
           // Toggle help overlay - handled by Deck component

@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useEffect, useState, useCallback } from 'react';
+import { ReactNode, useEffect, useState, useCallback, useRef } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Printer, X } from 'lucide-react';
 import { useSlideNavigation } from '@/hooks/useSlideNavigation';
@@ -66,6 +66,9 @@ function KeyboardHelp({ onClose }: { onClose: () => void }) {
             <div className="font-medium text-gray-500">Actions</div>
             <div></div>
 
+            <kbd className="px-2 py-1 bg-gray-100 rounded text-xs font-mono w-fit">T</kbd>
+            <div className="text-gray-700">Jump to Table of Contents</div>
+
             <kbd className="px-2 py-1 bg-gray-100 rounded text-xs font-mono w-fit">P</kbd>
             <div className="text-gray-700">Print / Export PDF</div>
 
@@ -82,13 +85,35 @@ function KeyboardHelp({ onClose }: { onClose: () => void }) {
   );
 }
 
+const IDLE_DELAY = 5000;
+
 export function Deck({ children, className = '' }: DeckProps) {
   const slides = Array.isArray(children) ? children : [children];
   const totalSlides = slides.length;
   const [printMode, setPrintMode] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [idle, setIdle] = useState(false);
+  const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { currentSlide, direction, nextSlide, prevSlide } = useSlideNavigation(totalSlides);
+
+  // Idle detection — reset on any pointer or key activity
+  const resetIdle = useCallback(() => {
+    setIdle(false);
+    if (idleTimer.current) clearTimeout(idleTimer.current);
+    idleTimer.current = setTimeout(() => setIdle(true), IDLE_DELAY);
+  }, []);
+
+  useEffect(() => {
+    const events = ['mousemove', 'mousedown', 'keydown', 'touchstart', 'wheel'];
+    events.forEach(e => window.addEventListener(e, resetIdle, { passive: true }));
+    // Start the timer on mount
+    idleTimer.current = setTimeout(() => setIdle(true), IDLE_DELAY);
+    return () => {
+      events.forEach(e => window.removeEventListener(e, resetIdle));
+      if (idleTimer.current) clearTimeout(idleTimer.current);
+    };
+  }, [resetIdle]);
 
   useEffect(() => {
     setPrintMode(isPrintMode());
@@ -133,6 +158,7 @@ export function Deck({ children, className = '' }: DeckProps) {
   }
 
   const progress = ((currentSlide + 1) / totalSlides) * 100;
+  const navVisible = !idle || showHelp;
 
   return (
     <div
@@ -140,9 +166,11 @@ export function Deck({ children, className = '' }: DeckProps) {
       tabIndex={0}
     >
       {/* Progress bar */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-white/10 z-20">
+      <div
+        className={`absolute top-0 left-0 right-0 h-px bg-white/10 z-20 transition-opacity duration-700 ${navVisible ? 'opacity-100' : 'opacity-0'}`}
+      >
         <div
-          className="h-full bg-white/60 transition-all duration-300 ease-out"
+          className="h-full bg-white/30 transition-all duration-300 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -154,70 +182,72 @@ export function Deck({ children, className = '' }: DeckProps) {
         </div>
       </AnimatePresence>
 
-      {/* Navigation arrows - hidden on mobile, visible on md+ */}
+      {/* Navigation arrows */}
       {currentSlide > 0 && (
         <button
           onClick={prevSlide}
-          className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 text-white/80 hover:bg-black/50 hover:text-white transition-all z-10"
+          className={`hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full border border-slate-300/50 text-slate-400/60 hover:text-slate-600 hover:border-slate-400 transition-all duration-700 z-10 ${navVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
           aria-label="Previous slide"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-4 h-4" />
         </button>
       )}
       {currentSlide < totalSlides - 1 && (
         <button
           onClick={nextSlide}
-          className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 text-white/80 hover:bg-black/50 hover:text-white transition-all z-10"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
-      )}
-
-      {/* Bottom navigation panel */}
-      <div className="absolute bottom-4 right-4 flex items-center gap-2 z-20 bg-black/40 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20">
-        {/* Mobile prev/next buttons */}
-        <button
-          onClick={prevSlide}
-          disabled={currentSlide === 0}
-          className="md:hidden p-1.5 rounded-full hover:bg-white/10 disabled:opacity-30 transition-all text-white/80"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </button>
-
-        {/* Slide counter */}
-        <span className="text-xs font-mono text-white/80 px-2">
-          {currentSlide + 1} / {totalSlides}
-        </span>
-
-        {/* Mobile prev/next buttons */}
-        <button
-          onClick={nextSlide}
-          disabled={currentSlide === totalSlides - 1}
-          className="md:hidden p-1.5 rounded-full hover:bg-white/10 disabled:opacity-30 transition-all text-white/80"
+          className={`hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full border border-slate-300/50 text-slate-400/60 hover:text-slate-600 hover:border-slate-400 transition-all duration-700 z-10 ${navVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
           aria-label="Next slide"
         >
           <ChevronRight className="w-4 h-4" />
         </button>
+      )}
+
+      {/* Bottom navigation panel */}
+      <div
+        className={`absolute bottom-3 right-3 flex items-center gap-1.5 z-20 px-2.5 py-1.5 rounded-full border border-slate-300/50 transition-opacity duration-700 ${navVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+      >
+        {/* Mobile prev/next */}
+        <button
+          onClick={prevSlide}
+          disabled={currentSlide === 0}
+          className="md:hidden p-1 rounded-full hover:bg-white/10 disabled:opacity-20 transition-all text-white/50"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-3.5 h-3.5" />
+        </button>
+
+        {/* Slide counter */}
+        <span className="text-[10px] font-mono text-slate-400/70 px-1 tracking-widest">
+          {currentSlide + 1} / {totalSlides}
+        </span>
+
+        {/* Mobile next */}
+        <button
+          onClick={nextSlide}
+          disabled={currentSlide === totalSlides - 1}
+          className="md:hidden p-1 rounded-full hover:bg-white/10 disabled:opacity-20 transition-all text-white/50"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-3.5 h-3.5" />
+        </button>
 
         {/* Divider */}
-        <div className="hidden md:block w-px h-4 bg-white/20" />
+        <div className="hidden md:block w-px h-3 bg-white/15" />
 
-        {/* Print button - desktop only */}
+        {/* Print button */}
         <button
           onClick={handlePrint}
-          className="hidden md:flex p-1.5 rounded-full hover:bg-white/10 transition-all text-white/80"
+          className="hidden md:flex p-1 rounded-full transition-all text-slate-400/60 hover:text-slate-600"
           aria-label="Print slides"
           title="Print (P)"
         >
-          <Printer className="w-4 h-4" />
+          <Printer className="w-3.5 h-3.5" />
         </button>
 
-        {/* Help button - desktop only */}
+        {/* Help button */}
         <button
           onClick={() => setShowHelp(true)}
-          className="hidden md:flex p-1.5 rounded-full hover:bg-white/10 transition-all text-white/80 font-mono text-xs"
+          className="hidden md:flex p-1 rounded-full transition-all text-slate-400/60 hover:text-slate-600 font-mono text-[10px]"
           aria-label="Keyboard shortcuts"
           title="Keyboard shortcuts (?)"
         >
