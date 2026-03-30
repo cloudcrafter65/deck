@@ -469,16 +469,16 @@ export function HypothesesSlide() {
 export function TOCSlide() {
   // Slide numbers are 1-indexed in the hash
   const parts = [
-    { label: 'Part 1', title: 'Approach, Intent & Strategy', slides: 'Slides 3–9', hash: '#3' },
-    { label: 'Part 2', title: 'Current State Assessment', slides: 'Slides 10–12', hash: '#10' },
-    { label: 'Part 3', title: 'Target Architecture', slides: 'Slides 13–18', hash: '#13' },
-    { label: 'Part 4', title: 'Organisational Design', slides: 'Slides 19–21', hash: '#19' },
-    { label: 'Part 5', title: 'Change Management & People', slides: 'Slides 22–23', hash: '#22' },
-    { label: 'Part 6', title: 'Delivery Model & Roadmap', slides: 'Slides 24–28', hash: '#24' },
-    { label: 'Part 7', title: 'Vendor & Sourcing Strategy', slides: 'Slide 29', hash: '#29' },
-    { label: 'Part 8', title: 'Trade-offs, Risks & Mitigations', slides: 'Slides 30–31', hash: '#30' },
-    { label: 'Part 9', title: 'Outcomes & Success Measures', slides: 'Slides 32–33', hash: '#32' },
-    { label: 'Part 10', title: 'Financial Framing', slides: 'Slide 34', hash: '#34' },
+    { label: 'Part 1', title: 'Approach, Intent & Strategy', slides: 'Slides 3–10', hash: '#3' },
+    { label: 'Part 2', title: 'Current State Assessment', slides: 'Slides 11–13', hash: '#11' },
+    { label: 'Part 3', title: 'Target Architecture', slides: 'Slides 14–19', hash: '#14' },
+    { label: 'Part 4', title: 'Organisational Design', slides: 'Slides 20–22', hash: '#20' },
+    { label: 'Part 5', title: 'Change Management & People', slides: 'Slides 23–24', hash: '#23' },
+    { label: 'Part 6', title: 'Delivery Model & Roadmap', slides: 'Slides 25–29', hash: '#25' },
+    { label: 'Part 7', title: 'Vendor & Sourcing Strategy', slides: 'Slide 30', hash: '#30' },
+    { label: 'Part 8', title: 'Trade-offs, Risks & Mitigations', slides: 'Slides 31–32', hash: '#31' },
+    { label: 'Part 9', title: 'Outcomes & Success Measures', slides: 'Slides 33–34', hash: '#33' },
+    { label: 'Part 10', title: 'Financial Framing', slides: 'Slide 35', hash: '#35' },
     // Note: slide count stays at 34 — StrategicRequirementsSlide replaces AssumptionsSlide
   ];
 
@@ -520,7 +520,7 @@ export function TOCSlide() {
           <motion.div variants={fadeUp} className="mt-6 flex items-center gap-8">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: TW_RED }} />
-              <p className="text-[10px] text-slate-500">34 slides · 24-month programme</p>
+              <p className="text-[10px] text-slate-500">35 slides · 24-month programme</p>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-amber-500" />
@@ -741,7 +741,96 @@ export function NorthStarSlide() {
   );
 }
 
-// ─── Slide 6: Strategy on a Page ────────────────────────────────────────────
+// ─── Slide 9: Omnichannel Sequencing ─────────────────────────────────────────
+
+export function OmnichannelSequencingSlide() {
+  const capabilities = [
+    {
+      n: '01',
+      phase: 'Phase 1',
+      title: 'Real-Time Store Inventory',
+      requires: 'Unified Inventory Service (CQRS) — strongly consistent write model, eventually consistent read model. Not the same data model.',
+      insight: 'When polling cannot achieve 90% accuracy, suppress the store\'s inventory — not "limited stock," not "check in store." Inaccurate availability destroys trust; no availability does not. This is a business decision, surfaced before any design began.',
+      tier: 'Tier A: event-driven · Tier B: polling, frequency tuned to transaction velocity',
+    },
+    {
+      n: '02',
+      phase: 'Phase 1 pilot · Phase 2 scale',
+      title: 'BOPIS: Buy Online, Pick Up In Store',
+      requires: 'Real-Time Inventory + OMS + Customer Identity as a shared cross-channel layer. All three must be present before BOPIS can function at scale.',
+      insight: 'The BOPIS pilot runs on the existing digital inventory system — a named, time-bounded bridge, not a permanent dependency. That is what makes November achievable. Had H4 returned differently, it would not have been.',
+      tier: 'Customer Identity is Phase 1, not Phase 3. Deferring it creates the channel silos BOPIS is built to eliminate.',
+    },
+    {
+      n: '03',
+      phase: 'Phase 2',
+      title: 'Cross-Channel Cart',
+      requires: 'Customer Identity + Unified Inventory + Unified Pricing — all Phase 1 or Phase 2 deliverables. None complete until Phase 2.',
+      insight: 'Attempting this in Phase 1 produces a cart that works in demos and fails in production — at the edge cases that represent the highest-value customers. Build the foundation before the feature.',
+      tier: 'Sequencing rule: a cross-channel capability is only as reliable as the cross-domain data beneath it.',
+    },
+  ];
+
+  return (
+    <Slide className="flex flex-col justify-center bg-white relative">
+      <div className="max-w-5xl w-full mx-auto px-12 pt-8 pb-4">
+        <motion.div variants={stagger} initial="hidden" animate="visible">
+
+          {/* Header */}
+          <motion.div variants={fadeUp} className="mb-4">
+            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-1">
+              Part 1 · Sequencing as Architecture
+            </p>
+            <h2 className="text-2xl font-bold text-slate-900">The Three Omnichannel Capabilities</h2>
+            <p className="text-sm text-slate-500 mt-1.5 leading-snug max-w-2xl">
+              This is not a roadmap preference. It is a technical dependency chain — and the chain has only one valid order.
+            </p>
+            <div className="w-10 h-0.5 mt-3" style={{ backgroundColor: TW_RED }} />
+          </motion.div>
+
+          {/* Dependency chain */}
+          <motion.div variants={fadeUp} className="flex items-center gap-2 mb-4">
+            {capabilities.map((c, i) => (
+              <div key={i} className="flex items-center gap-2 flex-1">
+                <div className="flex-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-center">
+                  <p className="text-[9px] font-bold tracking-widest uppercase text-slate-400 mb-0.5">{c.phase}</p>
+                  <p className="text-[11px] font-bold text-slate-900">{c.title}</p>
+                </div>
+                {i < capabilities.length - 1 && (
+                  <span className="text-slate-300 font-light text-lg shrink-0">→</span>
+                )}
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Capability cards */}
+          <motion.div variants={stagger} className="grid grid-cols-3 gap-3">
+            {capabilities.map((c, i) => (
+              <motion.div key={i} variants={fadeUp} className="border border-slate-100 rounded-xl bg-slate-50/40 px-4 py-3 flex flex-col gap-2">
+                <div>
+                  <p className="text-[9px] font-bold tracking-widest uppercase mb-1" style={{ color: TW_RED }}>Requires</p>
+                  <p className="text-[10px] text-slate-600 leading-snug">{c.requires}</p>
+                </div>
+                <div className="w-full h-px bg-slate-100" />
+                <div>
+                  <p className="text-[9px] font-bold tracking-widest uppercase mb-1 text-slate-400">Key Insight</p>
+                  <p className="text-[10px] text-slate-600 leading-snug">{c.insight}</p>
+                </div>
+                <div className="rounded-md bg-slate-100 px-2.5 py-1.5">
+                  <p className="text-[9px] text-slate-500 leading-snug italic">{c.tier}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+        </motion.div>
+      </div>
+      <SlideFooter glossary="BOPIS: Buy Online, Pick Up In-Store · CQRS: Command Query Responsibility Segregation · OMS: Order Management System · POS: Point of Sale" />
+    </Slide>
+  );
+}
+
+// ─── Slide 10: Strategy on a Page ────────────────────────────────────────────
 
 export function StrategyOnPageSlide() {
   return (
@@ -841,6 +930,253 @@ export function StrategyOnPageSlide() {
         </motion.div>
       </div>
       <SlideFooter glossary="MACH: Microservices, API-first, Cloud-native, Headless · OMS: Order Management System · MVP-BOPIS: Minimum Viable BOPIS contingency mode" />
+    </Slide>
+  );
+}
+
+// ─── Slide 10 V2: Strategy on a Page ─────────────────────────────────────────
+
+export function StrategyOnPageSlideV2() {
+  const objectives = [
+    {
+      label: 'Unified Commerce',
+      detail: 'One platform, two channels — shared inventory, pricing, and identity',
+      metric: 'Feature lead time ≤6 weeks',
+    },
+    {
+      label: 'Omnichannel by Nov 2026',
+      detail: 'BOPIS live in 30 stores · cross-channel cart by Phase 2',
+      metric: '15% BOPIS penetration · NPS +10 pts',
+    },
+    {
+      label: 'Own the Technology',
+      detail: 'Insource engineering · exit Thoughtworks by Month 18',
+      metric: '65:35 internal by M18 · ESB retired M22',
+    },
+    {
+      label: 'Revenue Growth',
+      detail: 'Cross-channel uplift driven by BOPIS and mobile',
+      metric: '$14–29M/yr · mobile conversion +20%',
+    },
+  ];
+
+  return (
+    <Slide className="flex items-center justify-center bg-slate-50 relative">
+      <div className="max-w-5xl w-full px-12 py-6">
+        <motion.div variants={stagger} initial="hidden" animate="visible">
+
+          {/* Header */}
+          <motion.div variants={fadeUp} className="mb-3">
+            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-1" style={{ color: TW_RED }}>
+              Part 1 · Summary
+            </p>
+            <h2 className="text-2xl font-bold text-slate-900">Strategy on a Page</h2>
+            <div className="w-10 h-0.5 mt-2" style={{ backgroundColor: TW_RED }} />
+          </motion.div>
+
+          {/* North Star */}
+          <motion.div variants={fadeUp} className="mb-3">
+            <div className="border-l-4 pl-3 py-1.5 rounded-r-lg bg-slate-50 flex items-center gap-3" style={{ borderColor: TW_RED }}>
+              <p className="text-[9px] font-bold tracking-widest uppercase text-slate-400 shrink-0">North Star</p>
+              <p className="text-[10px] text-slate-700 italic leading-snug">"The goal is to <span className="font-semibold not-italic">treat every customer as a single customer</span> — regardless of where they shop — at the speed the market demands."</p>
+            </div>
+          </motion.div>
+
+          {/* Business Objectives + Outcomes */}
+          <motion.div variants={fadeUp} className="mb-3">
+            <div className="grid grid-cols-4 gap-2.5">
+              {objectives.map((o, i) => (
+                <div key={i} className="border border-slate-200 rounded-xl bg-white px-3 py-2.5 flex flex-col">
+                  <p className="text-[10px] font-bold text-slate-900 mb-1">{o.label}</p>
+                  <p className="text-[9px] text-slate-500 leading-snug">{o.detail}</p>
+                  <div className="mt-auto pt-2">
+                    <p className="text-[9px] font-semibold" style={{ color: TW_RED }}>{o.metric}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Omnichannel Capabilities */}
+          <motion.div variants={fadeUp} className="mb-3">
+            <div className="border border-slate-200 rounded-xl bg-white px-4 py-2">
+              <div className="flex items-center gap-0">
+                {[
+                  { phase: 'Phase 1', title: 'Real-Time Store Inventory' },
+                  { phase: 'Phase 1 pilot · Phase 2 scale', title: 'BOPIS' },
+                  { phase: 'Phase 2', title: 'Cross-Channel Cart' },
+                ].map((c, i, arr) => (
+                  <div key={i} className={`flex-1 flex items-center gap-2 px-2.5 py-1.5 ${i > 0 ? 'border-l border-slate-100' : ''}`}>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[8px] font-semibold tracking-widest uppercase text-slate-400 leading-tight">{c.phase}</p>
+                      <p className="text-[10px] font-bold text-slate-800 leading-tight">{c.title}</p>
+                    </div>
+                    {i < arr.length - 1 && <span className="text-slate-300 text-sm shrink-0">→</span>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div variants={stagger} className="grid grid-cols-3 gap-3">
+            {/* Architecture */}
+            <motion.div variants={fadeUp}>
+              <Card className="p-4 h-full">
+                <p className="text-[10px] font-bold tracking-widest uppercase mb-2" style={{ color: TW_RED }}>Architecture</p>
+                <p className="text-xs font-semibold text-slate-900 mb-1.5">MACH composable commerce</p>
+                <ul className="text-[10px] text-slate-600 space-y-1 leading-relaxed">
+                  <li>· Unified PIM, Pricing, Inventory, OMS</li>
+                  <li>· Event streaming replaces ESB</li>
+                  <li>· CQRS — separate read/write models per domain</li>
+                  <li>· BFF per channel · DDD bounded contexts</li>
+                  <li>· Anti-corruption layer around SAP</li>
+                </ul>
+              </Card>
+            </motion.div>
+
+            {/* Organisation */}
+            <motion.div variants={fadeUp}>
+              <Card className="p-4 h-full">
+                <p className="text-[10px] font-bold tracking-widest uppercase mb-2" style={{ color: TW_RED }}>Organisation</p>
+                <p className="text-xs font-semibold text-slate-900 mb-1.5">Team Topologies + Insourcing</p>
+                <ul className="text-[10px] text-slate-600 space-y-1 leading-relaxed">
+                  <li>· 1 Platform team, 6 stream-aligned teams</li>
+                  <li>· 2 time-limited enabling teams (Thoughtworks)</li>
+                  <li>· 60 net-new hires over 18 months</li>
+                  <li>· 65:35 internal:external by Month 18</li>
+                  <li>· Architecture Guild with binding authority</li>
+                </ul>
+              </Card>
+            </motion.div>
+
+            {/* Delivery */}
+            <motion.div variants={fadeUp}>
+              <Card className="p-4 h-full">
+                <p className="text-[10px] font-bold tracking-widest uppercase mb-2" style={{ color: TW_RED }}>Delivery</p>
+                <p className="text-xs font-semibold text-slate-900 mb-1.5">Strangler Fig · Thin slices</p>
+                <ul className="text-[10px] text-slate-600 space-y-1 leading-relaxed">
+                  <li>· Phase 0: Foundations + critical decisions (M1–3)</li>
+                  <li>· Phase 1: BOPIS 30 pilot stores (M3–8)</li>
+                  <li>· Phase 2: Scale, SAP real-time, mobile exit (M8–16)</li>
+                  <li>· Phase 3: Full estate, ESB retire, loyalty (M16–24)</li>
+                </ul>
+              </Card>
+            </motion.div>
+          </motion.div>
+
+          {/* Financial — full width */}
+          <motion.div variants={fadeUp} className="mt-3">
+            <div className="border border-slate-200 rounded-xl bg-white px-4 py-2.5 flex items-center gap-8">
+              <p className="text-[9px] font-bold tracking-widest uppercase text-slate-400 shrink-0">Financial Envelope</p>
+              <div className="flex items-center gap-6 text-[10px]">
+                <span className="font-bold text-slate-900">$25–45M <span className="font-normal text-slate-500">investment · 24-month programme</span></span>
+                <span className="text-slate-300">·</span>
+                <span className="text-slate-600">Revenue uplift <span className="font-semibold text-slate-800">$14–29M/yr</span></span>
+                <span className="text-slate-300">·</span>
+                <span className="text-slate-600">Breakeven <span className="font-semibold text-slate-800">18–30 months</span></span>
+              </div>
+            </div>
+          </motion.div>
+
+
+        </motion.div>
+      </div>
+      <SlideFooter glossary="MACH: Microservices, API-first, Cloud-native, Headless · CQRS: Command Query Responsibility Segregation · OMS: Order Management System" />
+    </Slide>
+  );
+}
+
+// ─── Slide 11: Trade-offs Made Explicit ──────────────────────────────────────
+
+export function TradeoffsExplicitSlide() {
+  const tradeoffs = [
+    {
+      n: 'T1',
+      title: 'Delivery date vs. architectural purity',
+      gained: 'November 2026 protected. Pilot launches on time, within a scope the organisation can execute.',
+      gaveUp: 'Architectural coherence at launch. BOPIS runs on the digital inventory system we plan to replace.',
+      why: 'Waiting for SAP real-time integration moves the launch to Month 18. No architectural purity is worth a programme that loses board confidence before it delivers.',
+      cost: 'Architecture team accepted a named technical debt item with written decommission criteria.',
+    },
+    {
+      n: 'T2',
+      title: 'Timeline honesty vs. stakeholder expectation',
+      gained: 'An achievable 24-month timeline. A programme designed to succeed, not to impress.',
+      gaveUp: 'The 18-month commitment the CTO expected. The discomfort of delivering a number no one wanted to hear.',
+      why: 'Three findings made 18 months impossible: SAP ERP assessment (4 months, not 8 weeks); Tier B POS remediation invisible in original scope; vendor exit with a 6-month notice period and active IP dispute.',
+      cost: 'Board accepted a longer timeline. Commercial team accepted later delivery of some capabilities.',
+    },
+    {
+      n: 'T3',
+      title: 'Inventory availability vs. strict consistency',
+      gained: 'Unified Inventory stays available under peak trading load, even when the write path is under stress.',
+      gaveUp: 'Strict consistency. The read model is eventually consistent — up to 60 seconds stale at peak.',
+      why: 'Unavailability at peak trading is a worse experience than a 60-second staleness window. The 90% accuracy threshold for Tier B stores follows the same logic.',
+      cost: 'Customer experience team accepted that "in stock" reflects the last read model update, not this exact millisecond.',
+    },
+    {
+      n: 'T4',
+      title: 'Buy vs. build — the 80% threshold',
+      gained: 'PIM, OMS, and search delivered faster. Engineering focused on differentiated work.',
+      gaveUp: 'Exact fit. The org adapts its processes to the platform for the remaining 20% — not the reverse.',
+      why: 'Customising beyond 20% produces a vendor-shaped monolith that cannot be upgraded without rework. The organisation has already lived through one generation of that problem.',
+      cost: 'Product and operations teams accepted workflow changes. Bespoke OMS behaviour not in the chosen platform was deferred to Phase 2.',
+    },
+    {
+      n: 'T5',
+      title: 'Internal capability vs. delivery speed',
+      gained: 'An organisation that operates the platform independently at Month 24. The 65:35 ratio measures capability — not headcount preference.',
+      gaveUp: 'Speed in Phase 1. Internal engineers learn while delivering — and learning takes time.',
+      why: 'A programme that delivers a modern platform but leaves the org dependent on contractors has not solved the problem. It has replaced one dependency with another.',
+      cost: 'Programme sponsors accepted slower Phase 1 delivery. Thoughtworks accepted that enabling teams are measured by how quickly they make themselves unnecessary.',
+    },
+  ];
+
+  return (
+    <Slide className="flex flex-col justify-center bg-white relative">
+      <div className="max-w-6xl w-full mx-auto px-12 pt-8 pb-4">
+        <motion.div variants={stagger} initial="hidden" animate="visible">
+
+          {/* Header */}
+          <motion.div variants={fadeUp} className="mb-3">
+            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-1" style={{ color: TW_RED }}>
+              Part 1 · Strategy
+            </p>
+            <h2 className="text-2xl font-bold text-slate-900">Where the Strategy Took Its Risks</h2>
+            <p className="text-sm text-slate-500 mt-1.5 max-w-3xl leading-snug">
+              Unnamed trade-offs surface as failures. These five were named, owned, and accepted before the cost arrived.
+            </p>
+            <div className="w-10 h-0.5 mt-3" style={{ backgroundColor: TW_RED }} />
+          </motion.div>
+
+          {/* Trade-off cards — 3-row aligned grid */}
+          <motion.div variants={stagger} className="grid grid-cols-5 gap-3">
+            {/* Row 1: titles */}
+            {tradeoffs.map((t) => (
+              <motion.div key={`title-${t.n}`} variants={fadeUp} className="border border-slate-100 rounded-xl bg-white px-4 py-3 flex items-start justify-between gap-2">
+                <p className="text-[11px] font-bold text-slate-900 leading-snug">{t.title}</p>
+                <span className="text-[9px] font-bold tracking-widest uppercase px-1.5 py-0.5 rounded shrink-0" style={{ backgroundColor: '#ffeef2', color: TW_RED }}>{t.n}</span>
+              </motion.div>
+            ))}
+            {/* Row 2: Gained */}
+            {tradeoffs.map((t) => (
+              <motion.div key={`gained-${t.n}`} variants={fadeUp} className="rounded-xl bg-white border border-slate-100 px-3 py-2.5">
+                <p className="text-[8px] font-bold tracking-widest uppercase text-emerald-600 mb-1">Gained</p>
+                <p className="text-[9px] text-slate-700 leading-snug">{t.gained}</p>
+              </motion.div>
+            ))}
+            {/* Row 3: Gave up */}
+            {tradeoffs.map((t) => (
+              <motion.div key={`gaveup-${t.n}`} variants={fadeUp} className="rounded-xl bg-white border border-slate-100 px-3 py-2.5">
+                <p className="text-[8px] font-bold tracking-widest uppercase text-amber-600 mb-1">Gave up</p>
+                <p className="text-[9px] text-slate-700 leading-snug">{t.gaveUp}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+        </motion.div>
+      </div>
+      <SlideFooter />
     </Slide>
   );
 }

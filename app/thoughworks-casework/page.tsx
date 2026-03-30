@@ -9,7 +9,10 @@ import {
   TOCSlide,
   AssumptionsSlide,
   NorthStarSlide,
+  OmnichannelSequencingSlide,
   StrategyOnPageSlide,
+  StrategyOnPageSlideV2,
+  TradeoffsExplicitSlide,
   LandscapeSnapshotSlide,
   RootCauseSlide,
   DebtMapSlide,
@@ -52,8 +55,11 @@ export default function ThoughtworksCaseworkDeck() {
       <HypothesesSlide />
       <StrategicRequirementsSlide />
       {/* <AssumptionsSlide /> */}
+      <OmnichannelSequencingSlide />
       <NorthStarSlide />
-      <StrategyOnPageSlide />
+      {/* <StrategyOnPageSlide /> */}
+      <StrategyOnPageSlideV2 />
+      <TradeoffsExplicitSlide />
 
       {/* Part 2 — Current State Assessment */}
       <LandscapeSnapshotSlide />
