@@ -67,7 +67,7 @@ function KeyboardHelp({ onClose }: { onClose: () => void }) {
             <div></div>
 
             <kbd className="px-2 py-1 bg-gray-100 rounded text-xs font-mono w-fit">T</kbd>
-            <div className="text-gray-700">Jump to Table of Contents</div>
+            <div className="text-gray-700">Jump to Contents</div>
 
             <kbd className="px-2 py-1 bg-gray-100 rounded text-xs font-mono w-fit">P</kbd>
             <div className="text-gray-700">Print / Export PDF</div>

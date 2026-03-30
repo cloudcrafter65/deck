@@ -3,6 +3,9 @@ import {
   TitleSlide,
   ApproachSlide,
   ApproachSlideB,
+  DescentSlide,
+  HypothesesSlide,
+  StrategicRequirementsSlide,
   TOCSlide,
   AssumptionsSlide,
   NorthStarSlide,
@@ -40,11 +43,15 @@ export default function ThoughtworksCaseworkDeck() {
     <Deck>
       {/* Preamble */}
       <TitleSlide />
-      <ApproachSlideB />
       <TOCSlide />
 
-      {/* Part 1 — Assumptions, Intent & Strategy */}
-      <AssumptionsSlide />
+      {/* Part 1 — Approach, Intent & Strategy */}
+      <ApproachSlide />
+      <ApproachSlideB />
+      <DescentSlide />
+      <HypothesesSlide />
+      <StrategicRequirementsSlide />
+      {/* <AssumptionsSlide /> */}
       <NorthStarSlide />
       <StrategyOnPageSlide />
 

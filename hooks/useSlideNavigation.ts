@@ -94,7 +94,7 @@ export function useSlideNavigation(totalSlides: number) {
         case 't':
         case 'T':
           e.preventDefault();
-          goToSlide(2); // TOC is always slide 3 (index 2)
+          goToSlide(1); // TOC is always slide 2 (index 1)
           break;
         case '?':
           e.preventDefault();

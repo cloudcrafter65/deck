@@ -141,13 +141,13 @@ export function ApproachSlide() {
   const steps = [
     {
       n: '01',
-      title: 'Assumptions first',
-      body: 'Posed 6 clarifying questions before designing anything. Confirmed facts became architectural constraints. 10 remaining assumptions have named owners, validation dates, and contingencies.',
+      title: 'Patterns & Hypothesis Testing',
+      body: 'Formed the mental model before asking a single question. Five hypotheses, five targeted questions — each one framing the strategy before a line was drawn.',
     },
     {
       n: '02',
       title: 'Root cause over symptom',
-      body: '5 structural causes identified — not surface-level technical debt. Organisational design mirrored a business model that no longer exists. Fix the model, not just the code.',
+      body: 'Five structural causes, not surface-level debt. The organisational design mirrors a business model that no longer exists. Fix the model, not just the code.',
     },
     {
       n: '03',
@@ -157,12 +157,12 @@ export function ApproachSlide() {
     {
       n: '04',
       title: 'Hard deadline as forcing function',
-      body: 'BOPIS November 2026 is non-negotiable. Every decision traces back to the critical path. MVP-BOPIS contingency defined before the programme starts — not discovered mid-flight.',
+      body: 'BOPIS November 2026¹ is non-negotiable. Every decision traces back to the critical path. The contingency is defined before the programme starts — not discovered mid-flight.',
     },
     {
       n: '05',
       title: 'Every decision has a contingency',
-      body: 'OMS slip → MVP-BOPIS. Hiring miss → intervention protocol. SAP attrition → knowledge-capture sprint. Trade-offs documented as ADRs with funded retirement plans.',
+      body: 'OMS slip → MVP-BOPIS. Hiring miss → intervention protocol. SAP attrition → knowledge-capture sprint. Every trade-off carries an ADR with a funded retirement plan.',
     },
   ];
 
@@ -174,7 +174,7 @@ export function ApproachSlide() {
             <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-1">
               Interview · Problem-Solving Approach
             </p>
-            <h2 className="text-2xl font-bold text-slate-900">How I Approached This Problem</h2>
+            <h2 className="text-2xl font-bold text-slate-900">Method, not instinct.</h2>
             <div className="w-10 h-0.5 mt-2" style={{ backgroundColor: TW_RED }} />
           </motion.div>
 
@@ -192,13 +192,13 @@ export function ApproachSlide() {
           <motion.div variants={fadeUp} className="mt-7">
             <RedCallout>
               <p className="text-xs text-slate-700">
-                <span className="font-semibold">Core belief:</span> Technology modernisation is in service of a single outcome — treat every customer as one customer, regardless of where they shop. The org structure, architecture, and delivery model all follow from that.
+                <span className="font-semibold">Core belief:</span> Technology modernisation serves one outcome — every customer treated as a single customer, regardless of where they shop. The org structure, architecture, and delivery model all follow from that.
               </p>
             </RedCallout>
           </motion.div>
         </motion.div>
       </div>
-      <SlideFooter />
+      <SlideFooter glossary="¹ Assumed date — not stated in the brief" />
     </Slide>
   );
 }
@@ -254,8 +254,7 @@ export function ApproachSlideB() {
               The diagnosis was never technical.
             </h2>
             <p className="text-base text-slate-500 mt-2 leading-snug max-w-2xl">
-              None of these are technology problems. They are organisational and governance failures that surface as technology symptoms —
-              the architecture is a response to all five simultaneously.
+              None of these are technology problems. They are organisational and governance failures that surface as technology symptoms.
             </p>
             <div className="w-10 h-0.5 mt-4" style={{ backgroundColor: TW_RED }} />
           </motion.div>
@@ -296,21 +295,191 @@ export function ApproachSlideB() {
   );
 }
 
-// ─── Slide 3: TOC ────────────────────────────────────────────────────────────
+// ─── Slide 3: The Descent ────────────────────────────────────────────────────
+
+export function DescentSlide() {
+  const questions = [
+    {
+      q: 'Q1',
+      title: 'Is SAP integration event-capable, or are we polling?',
+      tests: 'Dual-Speed IT',
+      why: 'If SAP cannot emit events natively, the architecture bifurcates. The entire Strangler Fig migration sequence changes.',
+    },
+    {
+      q: 'Q2',
+      title: 'Are the 200+ stores technically homogeneous?',
+      tests: 'Board Has a Date',
+      why: 'Heterogeneous POS means a two-tier architecture, dual accuracy models, and $2–6M of Tier B remediation added to Phase 2.',
+    },
+    {
+      q: 'Q3',
+      title: 'How many pricing engines are running — and who owns each?',
+      tests: 'Outsourcing Trap',
+      why: 'Two engines are invisible while channels are separate. BOPIS makes them visible — a customer sees price A online and pays price B in-store.',
+    },
+    {
+      q: 'Q4',
+      title: 'What are the vendor contract terms — is there an active IP dispute?',
+      tests: 'Vendor as Constraint',
+      why: 'A 6-month notice period means 6 months of dual costs. An IP dispute could make source code and credentials contested mid-migration.',
+    },
+    {
+      q: 'Q5',
+      title: 'Can this organisation hire 65+ engineers in 24 months?',
+      tests: 'Talent Gap',
+      why: 'The 65:35 ratio is the measure of success — but every transformation hits the same wall: HR processes, comp bands, and pipelines not built for this pace.',
+    },
+    {
+      q: 'Q6',
+      title: 'Does the digital group already have a working inventory view?',
+      tests: 'Board Has a Date',
+      why: 'If no: the BOPIS critical path runs through SAP real-time integration — an 18–24 month programme. November becomes structurally impossible.',
+    },
+  ];
+
+  return (
+    <Slide className="flex flex-col justify-center bg-white relative">
+      <div className="max-w-5xl w-full mx-auto px-12 pt-8 pb-4">
+        <motion.div variants={stagger} initial="hidden" animate="visible">
+
+          {/* Header */}
+          <motion.div variants={fadeUp} className="mb-5">
+            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-1">
+              Interview · From Hypothesis to Question
+            </p>
+            <h2 className="text-2xl font-bold text-slate-900">The Descent</h2>
+            <p className="text-sm text-slate-500 mt-1.5 max-w-2xl leading-snug">
+              The answers to these six questions determine whether the programme is buildable as designed — or whether the strategy needs to change before it starts.
+            </p>
+            <div className="w-10 h-0.5 mt-3" style={{ backgroundColor: TW_RED }} />
+          </motion.div>
+
+          {/* 2x3 question grid */}
+          <motion.div variants={stagger} className="grid grid-cols-2 gap-3">
+            {questions.map((item, i) => (
+              <motion.div
+                key={i}
+                variants={fadeUp}
+                className="flex gap-3 border border-slate-100 rounded-xl bg-slate-50/50 px-4 py-3"
+              >
+                {/* Q badge */}
+                <div className="shrink-0 pt-0.5">
+                  <span className="text-[10px] font-bold tracking-widest text-slate-300">{item.q}</span>
+                </div>
+
+                <div className="min-w-0">
+                  <p className="text-[12px] font-semibold text-slate-900 leading-snug mb-1">{item.title}</p>
+                  <p className="text-[9px] font-bold tracking-widest uppercase mb-1.5" style={{ color: TW_RED }}>
+                    Tests: {item.tests}
+                  </p>
+                  <p className="text-[10.5px] text-slate-500 leading-snug">{item.why}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+        </motion.div>
+      </div>
+      <SlideFooter glossary="BOPIS: Buy Online, Pick Up In-Store · POS: Point of Sale · SI: Systems Integrator · SAP: Enterprise ERP platform" />
+    </Slide>
+  );
+}
+
+// ─── Slide 5: Hypotheses ─────────────────────────────────────────────────────
+
+export function HypothesesSlide() {
+  const items = [
+    {
+      h: 'H1',
+      pattern: 'Dual-Speed IT · Technical',
+      revealed: 'SAP cannot emit events natively — middleware required. A constraint, not a blocker.',
+      changed: 'Two-tier integration: events for modern systems, polling adapters for legacy POS.',
+    },
+    {
+      h: 'H2',
+      pattern: 'Dual-Speed IT · Governance',
+      revealed: 'No governance authority existed. Conflicts resolved by seniority. The ESB accumulated logic because nobody could say no.',
+      changed: 'Architecture Guild with binding authority, CTO escalation (5-day SLA), ADRs as mandatory institutional memory.',
+    },
+    {
+      h: 'H3',
+      pattern: 'Outsourcing Trap · Hidden Complexity',
+      revealed: 'Two engines running in parallel — SAP for base pricing, digital for promotional logic. Neither formally documented.',
+      changed: 'Unified Pricing Service in Phase 2. Discovery sprint in Phase 0. Freeze protocol around promotional periods. Daily reconciliation during transition.',
+    },
+    {
+      h: 'H4',
+      pattern: 'Board Has a Date · Critical Path',
+      revealed: 'Yes — a proven inventory view built for online orders, not dependent on SAP real-time.',
+      changed: 'Pilot on existing digital inventory — no SAP dependency. SAP real-time moves to Phase 2. November holds.',
+    },
+    {
+      h: 'H5',
+      pattern: 'Board Has a Date · Store Readiness',
+      revealed: '~60% Tier A (event-capable POS), ~40% Tier B (legacy — cannot emit events without replacement).',
+      changed: 'Phase 1 Tier A stores only. 90% accuracy threshold — suppress stale inventory rather than show it. Tier B remediation scoped as Phase 2 ($2–6M).',
+    },
+  ];
+
+  return (
+    <Slide className="flex flex-col justify-center bg-white relative">
+      <div className="max-w-5xl w-full mx-auto px-12 pt-8 pb-4">
+        <motion.div variants={stagger} initial="hidden" animate="visible">
+          <motion.div variants={fadeUp} className="mb-5">
+            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-1">
+              Interview · The Descent
+            </p>
+            <h2 className="text-2xl font-bold text-slate-900">Hypothesis → Question → Approach</h2>
+            <p className="text-sm text-slate-500 mt-1.5 leading-snug">
+              Not gathering information — stress-testing a mental model before the budget is committed.
+            </p>
+            <div className="w-10 h-0.5 mt-3" style={{ backgroundColor: TW_RED }} />
+          </motion.div>
+          <motion.div variants={stagger} className="grid grid-cols-2 gap-3">
+            {items.map((item, i) => (
+              <motion.div
+                key={i}
+                variants={fadeUp}
+                className="border border-slate-100 rounded-xl bg-slate-50/40 px-5 py-4 flex flex-col gap-2"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-bold tracking-widest text-slate-300">{item.h}</span>
+                  <span className="text-[9px] font-bold tracking-widest uppercase" style={{ color: TW_RED }}>{item.pattern}</span>
+                </div>
+                <div className="space-y-1.5">
+                  <p className="text-[10.5px] text-slate-500 leading-snug">
+                    <span className="font-semibold text-slate-700">Revealed — </span>{item.revealed}
+                  </p>
+                  <p className="text-[10.5px] text-slate-500 leading-snug">
+                    <span className="font-semibold text-slate-700">Approach — </span>{item.changed}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </div>
+      <SlideFooter glossary="SAP: Enterprise ERP · ESB: Enterprise Service Bus · ADR: Architecture Decision Record · BOPIS: Buy Online, Pick Up In-Store · POS: Point of Sale" />
+    </Slide>
+  );
+}
+
+// ─── Slide 6: TOC ────────────────────────────────────────────────────────────
 
 export function TOCSlide() {
   // Slide numbers are 1-indexed in the hash
   const parts = [
-    { label: 'Part 1', title: 'Assumptions, Intent & Strategy', slides: 'Slides 4–6', hash: '#4' },
-    { label: 'Part 2', title: 'Current State Assessment', slides: 'Slides 7–9', hash: '#7' },
-    { label: 'Part 3', title: 'Target Architecture', slides: 'Slides 10–15', hash: '#10' },
-    { label: 'Part 4', title: 'Organisational Design', slides: 'Slides 16–18', hash: '#16' },
-    { label: 'Part 5', title: 'Change Management & People', slides: 'Slides 19–20', hash: '#19' },
-    { label: 'Part 6', title: 'Delivery Model & Roadmap', slides: 'Slides 21–25', hash: '#21' },
-    { label: 'Part 7', title: 'Vendor & Sourcing Strategy', slides: 'Slide 26', hash: '#26' },
-    { label: 'Part 8', title: 'Trade-offs, Risks & Mitigations', slides: 'Slides 27–28', hash: '#27' },
-    { label: 'Part 9', title: 'Outcomes & Success Measures', slides: 'Slides 29–30', hash: '#29' },
-    { label: 'Part 10', title: 'Financial Framing', slides: 'Slide 31', hash: '#31' },
+    { label: 'Part 1', title: 'Approach, Intent & Strategy', slides: 'Slides 3–9', hash: '#3' },
+    { label: 'Part 2', title: 'Current State Assessment', slides: 'Slides 10–12', hash: '#10' },
+    { label: 'Part 3', title: 'Target Architecture', slides: 'Slides 13–18', hash: '#13' },
+    { label: 'Part 4', title: 'Organisational Design', slides: 'Slides 19–21', hash: '#19' },
+    { label: 'Part 5', title: 'Change Management & People', slides: 'Slides 22–23', hash: '#22' },
+    { label: 'Part 6', title: 'Delivery Model & Roadmap', slides: 'Slides 24–28', hash: '#24' },
+    { label: 'Part 7', title: 'Vendor & Sourcing Strategy', slides: 'Slide 29', hash: '#29' },
+    { label: 'Part 8', title: 'Trade-offs, Risks & Mitigations', slides: 'Slides 30–31', hash: '#30' },
+    { label: 'Part 9', title: 'Outcomes & Success Measures', slides: 'Slides 32–33', hash: '#32' },
+    { label: 'Part 10', title: 'Financial Framing', slides: 'Slide 34', hash: '#34' },
+    // Note: slide count stays at 34 — StrategicRequirementsSlide replaces AssumptionsSlide
   ];
 
   return (
@@ -351,7 +520,7 @@ export function TOCSlide() {
           <motion.div variants={fadeUp} className="mt-6 flex items-center gap-8">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: TW_RED }} />
-              <p className="text-[10px] text-slate-500">32 slides · 24-month programme</p>
+              <p className="text-[10px] text-slate-500">34 slides · 24-month programme</p>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-amber-500" />
@@ -369,7 +538,87 @@ export function TOCSlide() {
   );
 }
 
-// ─── Slide 4: Assumptions ────────────────────────────────────────────────────
+// ─── Slide 7: Strategic Requirements ─────────────────────────────────────────
+
+export function StrategicRequirementsSlide() {
+  const requirements = [
+    {
+      code: 'SR1',
+      title: 'Design the integration architecture for the actual estate, not the ideal one',
+      from: 'H1 + H5',
+      intent: 'SAP cannot emit events; 40% of stores cannot either. Design for Tier A (event-driven) and Tier B (polling) — not for the ideal estate with 40% as exceptions.',
+    },
+    {
+      code: 'SR2',
+      title: 'Build Unified Inventory as the first domain service',
+      from: 'H4 + H5',
+      intent: 'The BOPIS pilot launches on the existing digital inventory system — a named bridge with documented decommission criteria, not a permanent workaround. Unified Inventory (CQRS) is Domain Service #1.',
+    },
+    {
+      code: 'SR3',
+      title: 'Resolve the dual pricing engine conflict before designing the Unified Pricing Service',
+      from: 'H3',
+      intent: 'A pricing model discovery sprint runs in Phase 0 — not in parallel with migration. The Unified Pricing Service requires documented inputs before design begins.',
+    },
+    {
+      code: 'SR4',
+      title: 'Prove OMS integration viability in Phase 0 and agree the contingency before it is needed',
+      from: 'H4 · no OMS exists',
+      intent: 'The OMS is the highest-risk integration on the critical path. If the PoC reveals a slip, MVP-BOPIS activates — the board agrees the contingency in Phase 0, before it is needed.',
+    },
+    {
+      code: 'SR5',
+      title: 'Rebuild the mobile platform on a sustainable architecture',
+      from: 'Current state finding',
+      intent: 'Screen-scraping cannot survive 24 months of SAP changes. React Native on BFF APIs from Sprint 1.',
+    },
+    {
+      code: 'SR6',
+      title: 'Establish an architecture governance body with binding decision authority',
+      from: 'H2',
+      intent: 'The Architecture Guild holds binding — not advisory — decision authority, with CTO escalation and a 5-day resolution SLA. The ESB accumulated logic because no authority existed to prevent it.',
+    },
+  ];
+
+  return (
+    <Slide className="flex flex-col justify-center bg-white relative">
+      <div className="max-w-5xl w-full mx-auto px-12 pt-8 pb-4">
+        <motion.div variants={stagger} initial="hidden" animate="visible">
+
+          {/* Header */}
+          <motion.div variants={fadeUp} className="mb-5">
+            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-1">
+              Interview · From Diagnosis to Strategy
+            </p>
+            <h2 className="text-2xl font-bold text-slate-900">From Diagnosis to Strategic Requirements</h2>
+            <p className="text-sm text-slate-500 mt-1.5 leading-snug">
+              Each requirement traces to a hypothesis. Each hypothesis traces to a finding. The connection is made visible — not assumed.
+            </p>
+            <div className="w-10 h-0.5 mt-3" style={{ backgroundColor: TW_RED }} />
+          </motion.div>
+
+          {/* 2×3 grid */}
+          <motion.div variants={stagger} className="grid grid-cols-2 gap-3">
+            {requirements.map((r, i) => (
+              <motion.div key={i} variants={fadeUp} className="border border-slate-100 rounded-lg bg-slate-50/40 px-4 py-3">
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="text-[10px] font-bold tracking-widest text-slate-300">{r.code}</span>
+                  <span className="text-[9px] text-slate-400 italic">← {r.from}</span>
+                </div>
+                <p className="text-[11.5px] font-semibold text-slate-900 leading-snug mb-1">{r.title}</p>
+                <p className="text-[10px] text-slate-500 leading-snug">{r.intent}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+        </motion.div>
+      </div>
+      <SlideFooter glossary="SR: Strategic Requirement · CQRS: Command Query Responsibility Segregation · BFF: Backend for Frontend · OMS: Order Management System" />
+    </Slide>
+  );
+}
+
+// ─── Slide 8 (hidden): Assumptions ───────────────────────────────────────────
 
 export function AssumptionsSlide() {
   const facts = [
@@ -432,17 +681,23 @@ export function AssumptionsSlide() {
 
 export function NorthStarSlide() {
   const principles = [
-    { n: 'P1', title: 'Strangler Fig over Big Bang', body: 'Incremental replacement with agreed decommission criteria before migration begins.' },
-    { n: 'P2', title: 'DDD as architecture compass', body: 'Clear bounded contexts: Product, Pricing, Inventory, Order, Customer, Fulfilment.' },
-    { n: 'P3', title: 'Events as integration fabric', body: 'Managed event streaming replaces ESB. Schema registry governs evolution.' },
-    { n: 'P4', title: 'API-first, channel-agnostic', body: 'Commerce via APIs. Channels are consumers via BFFs — no privileged access.' },
-    { n: 'P5', title: 'Buy for commodity, build for diff.', body: 'SaaS PIM/OMS evaluated with PoC sprints against real edge cases — not vendor demos.' },
-    { n: 'P6', title: 'Inverse Conway Manoeuvre', body: 'Org structure mirrors target architecture. Teams that ship independently must not share pipelines.' },
-    { n: 'P7', title: 'Continuous delivery non-negotiable', body: 'CI/CD, automated testing, trunk-based dev are prerequisites, not aspirations.' },
-    { n: 'P8', title: 'Insource alongside delivery', body: 'Every workstream carries a capability transfer plan aligned to hiring velocity.' },
-    { n: 'P9', title: 'Security by design, not audit', body: 'PCI-DSS scope, GDPR, mTLS — architectural inputs, not post-delivery reviews.' },
-    { n: 'P10', title: 'Measure from day one', body: 'Programme Measurement Dashboard live before first domain service. Outcomes tracked in near-real-time.' },
+    { n: 'P1', title: 'Strangler Fig over Big Bang', body: 'Incremental replacement with agreed decommission criteria before migration begins.', group: 1 },
+    { n: 'P2', title: 'DDD as architecture compass', body: 'Clear bounded contexts: Product, Pricing, Inventory, Order, Customer, Fulfilment.', group: 1 },
+    { n: 'P3', title: 'Events as integration fabric', body: 'Managed event streaming replaces ESB. Schema registry governs evolution.', group: 1 },
+    { n: 'P4', title: 'API-first, channel-agnostic', body: 'Commerce via APIs. Channels are consumers via BFFs — no privileged access.', group: 1 },
+    { n: 'P5', title: 'Buy for commodity, build for diff.', body: 'SaaS PIM/OMS evaluated with PoC sprints against real edge cases — not vendor demos.', group: 1 },
+    { n: 'P6', title: 'Continuous delivery non-negotiable', body: 'CI/CD, automated testing, trunk-based dev are prerequisites, not aspirations.', group: 2 },
+    { n: 'P7', title: 'Measure from day one', body: 'Programme Measurement Dashboard live before first domain service. Outcomes tracked in near-real-time.', group: 2 },
+    { n: 'P8', title: 'Inverse Conway Manoeuvre', body: 'Org structure mirrors target architecture. Teams that ship independently must not share pipelines.', group: 3 },
+    { n: 'P9', title: 'Insource alongside delivery', body: 'Every workstream carries a capability transfer plan aligned to hiring velocity.', group: 3 },
+    { n: 'P10', title: 'Security by design, not audit', body: 'PCI-DSS scope, GDPR, mTLS — architectural inputs, not post-delivery reviews.', group: 3 },
   ];
+
+  const groupStyle: Record<number, { border: string; label: string; dot: string }> = {
+    1: { border: 'border-blue-100 bg-blue-50/40',   label: 'How the system is built',          dot: 'bg-blue-300' },
+    2: { border: 'border-amber-100 bg-amber-50/40', label: 'How it is delivered',               dot: 'bg-amber-400' },
+    3: { border: 'border-emerald-100 bg-emerald-50/40', label: 'How the org sustains it',       dot: 'bg-emerald-400' },
+  };
 
   return (
     <Slide className="flex items-center justify-center bg-white relative">
@@ -452,7 +707,7 @@ export function NorthStarSlide() {
             <SectionLabel part="Part 1 · Assumptions, Intent & Strategy" title="North Star & Guiding Principles" />
           </motion.div>
 
-          <motion.div variants={fadeUp} className="mb-5">
+          <motion.div variants={fadeUp} className="mb-4">
             <RedCallout>
               <p className="text-sm font-light text-slate-800 leading-relaxed italic">
                 "The goal is not to modernise technology. The goal is to <strong>treat every customer as a single customer</strong> — regardless of where they shop — at the speed the market demands. Technology modernisation is in service of that outcome."
@@ -462,11 +717,21 @@ export function NorthStarSlide() {
 
           <motion.div variants={stagger} className="grid grid-cols-5 gap-3">
             {principles.map((p) => (
-              <motion.div key={p.n} variants={fadeUp} className="border border-slate-200 rounded-lg p-3 bg-white">
+              <motion.div key={p.n} variants={fadeUp} className={`border rounded-lg p-3 ${groupStyle[p.group].border}`}>
                 <p className="text-[10px] font-bold tracking-widest mb-1" style={{ color: TW_RED }}>{p.n}</p>
                 <p className="text-xs font-semibold text-slate-900 leading-snug mb-1.5">{p.title}</p>
                 <p className="text-[10px] text-slate-500 leading-relaxed">{p.body}</p>
               </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Legend */}
+          <motion.div variants={fadeUp} className="flex items-center gap-5 mt-3">
+            {Object.entries(groupStyle).map(([g, s]) => (
+              <div key={g} className="flex items-center gap-1.5">
+                <div className={`w-2 h-2 rounded-full ${s.dot}`} />
+                <span className="text-[9px] text-slate-500">{s.label}</span>
+              </div>
             ))}
           </motion.div>
         </motion.div>
