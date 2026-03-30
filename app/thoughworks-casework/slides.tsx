@@ -22,7 +22,7 @@ const TW_RED = '#E4003B';
 function SectionLabel({ part, title }: { part: string; title: string }) {
   return (
     <div className="mb-5">
-      <p className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-1" style={{ color: TW_RED }}>
+      <p className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-1 text-slate-400">
         {part}
       </p>
       <h2 className="text-2xl font-bold text-slate-900">{title}</h2>
@@ -172,7 +172,7 @@ export function ApproachSlide() {
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.div variants={fadeUp} className="mb-7">
             <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-1">
-              Interview · Problem-Solving Approach
+              Part 1 · Problem-Solving Approach
             </p>
             <h2 className="text-2xl font-bold text-slate-900">Method, not instinct.</h2>
             <div className="w-10 h-0.5 mt-2" style={{ backgroundColor: TW_RED }} />
@@ -345,7 +345,7 @@ export function DescentSlide() {
           {/* Header */}
           <motion.div variants={fadeUp} className="mb-5">
             <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-1">
-              Interview · From Hypothesis to Question
+              Part 1 · From Hypothesis to Question
             </p>
             <h2 className="text-2xl font-bold text-slate-900">The Descent</h2>
             <p className="text-sm text-slate-500 mt-1.5 max-w-2xl leading-snug">
@@ -427,7 +427,7 @@ export function HypothesesSlide() {
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.div variants={fadeUp} className="mb-5">
             <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-1">
-              Interview · The Descent
+              Part 1 · The Descent
             </p>
             <h2 className="text-2xl font-bold text-slate-900">Hypothesis → Question → Approach</h2>
             <p className="text-sm text-slate-500 mt-1.5 leading-snug">
@@ -588,7 +588,7 @@ export function StrategicRequirementsSlide() {
           {/* Header */}
           <motion.div variants={fadeUp} className="mb-5">
             <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-1">
-              Interview · From Diagnosis to Strategy
+              Part 1 · From Diagnosis to Strategy
             </p>
             <h2 className="text-2xl font-bold text-slate-900">From Diagnosis to Strategic Requirements</h2>
             <p className="text-sm text-slate-500 mt-1.5 leading-snug">
@@ -694,9 +694,9 @@ export function NorthStarSlide() {
   ];
 
   const groupStyle: Record<number, { border: string; label: string; dot: string }> = {
-    1: { border: 'border-blue-100 bg-blue-50/40',   label: 'How the system is built',          dot: 'bg-blue-300' },
-    2: { border: 'border-amber-100 bg-amber-50/40', label: 'How it is delivered',               dot: 'bg-amber-400' },
-    3: { border: 'border-emerald-100 bg-emerald-50/40', label: 'How the org sustains it',       dot: 'bg-emerald-400' },
+    1: { border: 'border-blue-100 bg-blue-50/40', label: 'How the system is built', dot: 'bg-blue-300' },
+    2: { border: 'border-amber-100 bg-amber-50/40', label: 'How it is delivered', dot: 'bg-amber-400' },
+    3: { border: 'border-emerald-100 bg-emerald-50/40', label: 'How the org sustains it', dot: 'bg-emerald-400' },
   };
 
   return (
@@ -746,28 +746,36 @@ export function NorthStarSlide() {
 export function OmnichannelSequencingSlide() {
   const capabilities = [
     {
-      n: '01',
+      n: 'C1',
+      title: 'Unified Customer Identity',
       phase: 'Phase 1',
-      title: 'Real-Time Store Inventory',
-      requires: 'Unified Inventory Service (CQRS) — strongly consistent write model, eventually consistent read model. Not the same data model.',
-      insight: 'When polling cannot achieve 90% accuracy, suppress the store\'s inventory — not "limited stock," not "check in store." Inaccurate availability destroys trust; no availability does not. This is a business decision, surfaced before any design began.',
-      tier: 'Tier A: event-driven · Tier B: polling, frequency tuned to transaction velocity',
+      contract: 'The customer is the same person in every channel.',
+      decisions: [
+        'Elevated to Phase 1 — not because BOPIS requires it at launch, but because every capability built without it accumulates identity debt.',
+        'A genuine bounded context: GDPR consent, right-to-erasure, and identity verification rules live here — not in a shared database table.',
+      ],
     },
     {
-      n: '02',
-      phase: 'Phase 1 pilot · Phase 2 scale',
-      title: 'BOPIS: Buy Online, Pick Up In Store',
-      requires: 'Real-Time Inventory + OMS + Customer Identity as a shared cross-channel layer. All three must be present before BOPIS can function at scale.',
-      insight: 'The BOPIS pilot runs on the existing digital inventory system — a named, time-bounded bridge, not a permanent dependency. That is what makes November achievable. Had H4 returned differently, it would not have been.',
-      tier: 'Customer Identity is Phase 1, not Phase 3. Deferring it creates the channel silos BOPIS is built to eliminate.',
+      n: 'C2',
+      title: 'Unified Inventory',
+      phase: 'Phase 1',
+      contract: 'The stock position is the same truth in every channel.',
+      decisions: [
+        'CQRS: strongly consistent write model for stock mutations; eventually consistent read model for customer queries. Different concerns, different models.',
+        'Tier A stores: near-real-time events. Tier B: polling at frequency modelled against transaction velocity.',
+        '90% accuracy threshold: stores below it have inventory suppressed entirely — not shown as "limited." Inaccurate availability is worse than no availability.',
+        'BOPIS pilot runs on the existing digital system as a named, time-bounded bridge. Unified Inventory replaces it in Phase 2.',
+      ],
     },
     {
-      n: '03',
-      phase: 'Phase 2',
-      title: 'Cross-Channel Cart',
-      requires: 'Customer Identity + Unified Inventory + Unified Pricing — all Phase 1 or Phase 2 deliverables. None complete until Phase 2.',
-      insight: 'Attempting this in Phase 1 produces a cart that works in demos and fails in production — at the edge cases that represent the highest-value customers. Build the foundation before the feature.',
-      tier: 'Sequencing rule: a cross-channel capability is only as reliable as the cross-domain data beneath it.',
+      n: 'C3',
+      title: 'Unified Order Orchestration',
+      phase: 'Phase 1 (PoC) · Phase 2 (full)',
+      contract: 'Orders can be placed in any channel and fulfilled through any combination of channels.',
+      decisions: [
+        'Highest-risk integration on the BOPIS critical path. OMS proof-of-concept is a Phase 0 gate, not a Phase 1 assumption.',
+        'Contingency: if OMS integration is not ready by Month 5, BOPIS launches in minimum viable mode — existing digital system, stores notified by email and SMS. November is protected.',
+      ],
     },
   ];
 
@@ -779,53 +787,52 @@ export function OmnichannelSequencingSlide() {
           {/* Header */}
           <motion.div variants={fadeUp} className="mb-4">
             <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-400 mb-1">
-              Part 1 · Sequencing as Architecture
+              Part 1 · Foundations Before Features
             </p>
-            <h2 className="text-2xl font-bold text-slate-900">The Three Omnichannel Capabilities</h2>
-            <p className="text-sm text-slate-500 mt-1.5 leading-snug max-w-2xl">
-              This is not a roadmap preference. It is a technical dependency chain — and the chain has only one valid order.
+            <h2 className="text-2xl font-bold text-slate-900">The Three Foundational Capabilities</h2>
+            <p className="text-sm text-slate-500 mt-1.5 leading-snug max-w-3xl">
+              BOPIS and cross-channel cart are not capabilities — they are use cases. A roadmap built around use cases rebuilds the same foundations multiple times, once per deadline. Build the foundations once; the use cases follow in order.
             </p>
             <div className="w-10 h-0.5 mt-3" style={{ backgroundColor: TW_RED }} />
           </motion.div>
 
-          {/* Dependency chain */}
-          <motion.div variants={fadeUp} className="flex items-center gap-2 mb-4">
-            {capabilities.map((c, i) => (
-              <div key={i} className="flex items-center gap-2 flex-1">
-                <div className="flex-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-center">
-                  <p className="text-[9px] font-bold tracking-widest uppercase text-slate-400 mb-0.5">{c.phase}</p>
-                  <p className="text-[11px] font-bold text-slate-900">{c.title}</p>
-                </div>
-                {i < capabilities.length - 1 && (
-                  <span className="text-slate-300 font-light text-lg shrink-0">→</span>
-                )}
-              </div>
-            ))}
-          </motion.div>
-
           {/* Capability cards */}
-          <motion.div variants={stagger} className="grid grid-cols-3 gap-3">
-            {capabilities.map((c, i) => (
-              <motion.div key={i} variants={fadeUp} className="border border-slate-100 rounded-xl bg-slate-50/40 px-4 py-3 flex flex-col gap-2">
+          <motion.div variants={stagger} className="grid grid-cols-3 gap-4">
+            {capabilities.map((c) => (
+              <motion.div key={c.n} variants={fadeUp} className="border border-slate-100 rounded-xl bg-white px-4 py-4 flex flex-col gap-3">
+
+                {/* Title */}
                 <div>
-                  <p className="text-[9px] font-bold tracking-widest uppercase mb-1" style={{ color: TW_RED }}>Requires</p>
-                  <p className="text-[10px] text-slate-600 leading-snug">{c.requires}</p>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[9px] font-bold tracking-widest uppercase px-1.5 py-0.5 rounded" style={{ backgroundColor: '#ffeef2', color: TW_RED }}>{c.n}</span>
+                    <span className="text-[8px] font-semibold tracking-widest uppercase text-slate-400">{c.phase}</span>
+                  </div>
+                  <p className="text-sm font-bold text-slate-900 leading-snug">{c.title}</p>
+                  <p className="text-[10px] text-slate-500 italic mt-1 leading-snug">"{c.contract}"</p>
                 </div>
+
                 <div className="w-full h-px bg-slate-100" />
+
+                {/* Design decisions */}
                 <div>
-                  <p className="text-[9px] font-bold tracking-widest uppercase mb-1 text-slate-400">Key Insight</p>
-                  <p className="text-[10px] text-slate-600 leading-snug">{c.insight}</p>
+                  <p className="text-[8px] font-bold tracking-widest uppercase mb-1.5" style={{ color: TW_RED }}>Design Decisions</p>
+                  <ul className="space-y-1.5">
+                    {c.decisions.map((d, i) => (
+                      <li key={i} className="flex gap-1.5 text-[9px] text-slate-600 leading-snug">
+                        <span className="shrink-0 mt-0.5 w-1 h-1 rounded-full bg-slate-300" />
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="rounded-md bg-slate-100 px-2.5 py-1.5">
-                  <p className="text-[9px] text-slate-500 leading-snug italic">{c.tier}</p>
-                </div>
+
               </motion.div>
             ))}
           </motion.div>
 
         </motion.div>
       </div>
-      <SlideFooter glossary="BOPIS: Buy Online, Pick Up In-Store · CQRS: Command Query Responsibility Segregation · OMS: Order Management System · POS: Point of Sale" />
+      <SlideFooter glossary="CQRS: Command Query Responsibility Segregation · OMS: Order Management System · BOPIS: Buy Online, Pick Up In-Store · GDPR: General Data Protection Regulation" />
     </Slide>
   );
 }
@@ -838,7 +845,7 @@ export function StrategyOnPageSlide() {
       <div className="max-w-5xl w-full px-12 py-8">
         <motion.div variants={stagger} initial="hidden" animate="visible">
           <motion.div variants={fadeUp} className="mb-5">
-            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-1" style={{ color: TW_RED }}>
+            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-1 text-slate-400">
               Part 1 · Summary
             </p>
             <h2 className="text-2xl font-bold text-slate-900">Strategy on a Page</h2>
@@ -939,22 +946,22 @@ export function StrategyOnPageSlide() {
 export function StrategyOnPageSlideV2() {
   const objectives = [
     {
-      label: 'Unified Commerce',
+      label: 'Unify the Platform',
       detail: 'One platform, two channels — shared inventory, pricing, and identity',
       metric: 'Feature lead time ≤6 weeks',
     },
     {
-      label: 'Omnichannel by Nov 2026',
+      label: 'Launch Omnichannel',
       detail: 'BOPIS live in 30 stores · cross-channel cart by Phase 2',
       metric: '15% BOPIS penetration · NPS +10 pts',
     },
     {
-      label: 'Own the Technology',
+      label: 'Own the Tech',
       detail: 'Insource engineering · exit Thoughtworks by Month 18',
       metric: '65:35 internal by M18 · ESB retired M22',
     },
     {
-      label: 'Revenue Growth',
+      label: 'Grow Revenue',
       detail: 'Cross-channel uplift driven by BOPIS and mobile',
       metric: '$14–29M/yr · mobile conversion +20%',
     },
@@ -967,10 +974,10 @@ export function StrategyOnPageSlideV2() {
 
           {/* Header */}
           <motion.div variants={fadeUp} className="mb-3">
-            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-1" style={{ color: TW_RED }}>
-              Part 1 · Summary
+            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-1 text-slate-400">
+              Part 1 · Strategy on a Page
             </p>
-            <h2 className="text-2xl font-bold text-slate-900">Strategy on a Page</h2>
+            <h2 className="text-2xl font-bold text-slate-900">Omnichannel Modernisation Strategy</h2>
             <div className="w-10 h-0.5 mt-2" style={{ backgroundColor: TW_RED }} />
           </motion.div>
 
@@ -1002,9 +1009,9 @@ export function StrategyOnPageSlideV2() {
             <div className="border border-slate-200 rounded-xl bg-white px-4 py-2">
               <div className="flex items-center gap-0">
                 {[
-                  { phase: 'Phase 1', title: 'Real-Time Store Inventory' },
-                  { phase: 'Phase 1 pilot · Phase 2 scale', title: 'BOPIS' },
-                  { phase: 'Phase 2', title: 'Cross-Channel Cart' },
+                  { phase: 'Phase 1', title: 'Unified Customer Identity' },
+                  { phase: 'Phase 1', title: 'Unified Inventory' },
+                  { phase: 'Phase 1 (PoC) · Phase 2 (full)', title: 'Unified Order Orchestration' },
                 ].map((c, i, arr) => (
                   <div key={i} className={`flex-1 flex items-center gap-2 px-2.5 py-1.5 ${i > 0 ? 'border-l border-slate-100' : ''}`}>
                     <div className="min-w-0 flex-1">
@@ -1139,7 +1146,7 @@ export function TradeoffsExplicitSlide() {
 
           {/* Header */}
           <motion.div variants={fadeUp} className="mb-3">
-            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-1" style={{ color: TW_RED }}>
+            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-1 text-slate-400">
               Part 1 · Strategy
             </p>
             <h2 className="text-2xl font-bold text-slate-900">Where the Strategy Took Its Risks</h2>
@@ -2779,12 +2786,19 @@ export function BusinessOutcomesSlide() {
             <motion.div variants={fadeUp} className="flex flex-col gap-3">
               <Card className="p-4">
                 <p className="text-[10px] font-bold tracking-widest uppercase mb-3" style={{ color: TW_RED }}>Customer Experience Outcomes</p>
-                <ul className="text-[10px] text-slate-600 space-y-2 leading-relaxed">
-                  <li className="flex gap-2"><span className="font-bold text-slate-800">Browse online, buy in-store:</span> Consistent product, price, and inventory view regardless of channel.</li>
-                  <li className="flex gap-2"><span className="font-bold text-slate-800">Cross-channel cart:</span> Add to cart on web, continue and checkout on mobile — or any channel combination.</li>
-                  <li className="flex gap-2"><span className="font-bold text-slate-800">Real-time store inventory:</span> Customer sees accurate stock before making the trip to the store.</li>
-                  <li className="flex gap-2"><span className="font-bold text-slate-800">Cross-channel returns:</span> Buy online, return in-store — Phase 3 capability.</li>
-                  <li className="flex gap-2"><span className="font-bold text-slate-800">Loyalty unification:</span> A single loyalty identity across all touchpoints — Phase 3 capability.</li>
+                <ul className="text-[10px] space-y-2.5">
+                  {[
+                    { label: 'Browse online, buy in-store', desc: 'Consistent product, price, and inventory view regardless of channel.' },
+                    { label: 'Cross-channel cart', desc: 'Add to cart on web, continue and checkout on mobile — or any channel combination.' },
+                    { label: 'Real-time store inventory', desc: 'Customer sees accurate stock before making the trip to the store.' },
+                    { label: 'Cross-channel returns', desc: 'Buy online, return in-store — Phase 3 capability.' },
+                    { label: 'Loyalty unification', desc: 'A single loyalty identity across all touchpoints — Phase 3 capability.' },
+                  ].map((item, i) => (
+                    <li key={i}>
+                      <p className="font-bold text-slate-800 leading-snug">{item.label}</p>
+                      <p className="text-slate-500 leading-snug mt-0.5">{item.desc}</p>
+                    </li>
+                  ))}
                 </ul>
               </Card>
 
