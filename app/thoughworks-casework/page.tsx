@@ -51,7 +51,7 @@ export default function ThoughtworksCaseworkDeck() {
       {/* Part 1 — Approach, Intent & Strategy */}
       <ApproachSlide />
       <ApproachSlideB />
-      <DescentSlide />
+      {/* <DescentSlide /> */}
       <HypothesesSlide />
       <StrategicRequirementsSlide />
       {/* <AssumptionsSlide /> */}
