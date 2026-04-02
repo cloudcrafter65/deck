@@ -15,8 +15,8 @@ type SiteId = 'bytejournal' | 'cyaire';
 
 // Inline site config to avoid dynamic imports in middleware
 const siteDecks: Record<SiteId, string[]> = {
-  bytejournal: ['cre-pov', 'resume-2hr', 'zendesk', 'example', 'sed-pov', 'gcp-fsi-arch'],
-  cyaire: ['ams-client-pitch', 'appmod', 'ams-gtm-26', 'arch-readiness', 'thoughtworks-interview'],
+  bytejournal: ['cre-pov', 'resume-2hr', 'zendesk', 'example', 'sed-pov', 'gcp-fsi-arch', 'myprofile'],
+  cyaire: ['ams-client-pitch', 'appmod', 'ams-gtm-26', 'arch-readiness'],
 };
 
 // All known deck slugs (to identify deck routes)
@@ -31,7 +31,7 @@ const allDecks = new Set([
   'example',
   'sed-pov',
   'gcp-fsi-arch',
-  'thoughtworks-interview',
+  'myprofile',
 ]);
 
 export function proxy(request: NextRequest) {

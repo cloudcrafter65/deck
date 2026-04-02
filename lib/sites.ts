@@ -32,7 +32,7 @@ export const sites: Record<SiteId, SiteConfig> = {
     name: 'ByteJournal',
     domain: 'deck.bytejournal.blog',
     baseUrl: 'https://deck.bytejournal.blog',
-    decks: ['cre-pov', 'resume-2hr', 'zendesk', 'example', 'sed-pov', 'gcp-fsi-arch'],
+    decks: ['cre-pov', 'resume-2hr', 'zendesk', 'example', 'sed-pov', 'gcp-fsi-arch', 'myprofile'],
     protected: false,  // Public decks — no auth required
     metadata: {
       title: 'Vijayakumar G.A. | CTO AI Transformation',
@@ -60,7 +60,7 @@ export const sites: Record<SiteId, SiteConfig> = {
     name: 'Cyaire',
     domain: 'deck.cyaire.com',
     baseUrl: 'https://deck.cyaire.com',
-    decks: ['ams-client-pitch', 'appmod', 'ams-gtm-26', 'arch-readiness', 'thoughworks-casework', 'thoughtworks-interview'],
+    decks: ['ams-client-pitch', 'appmod', 'ams-gtm-26', 'arch-readiness', 'thoughworks-casework'],
     protected: true,  // Private decks — auth required
     metadata: {
       title: 'Cyaire | AI Transformation & Application Modernization',
